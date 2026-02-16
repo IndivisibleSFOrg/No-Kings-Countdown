@@ -40,7 +40,7 @@ export function MasonryView({ actions }: MasonryViewProps) {
   // Initialize state
   const [shuffledActions, setShuffledActions] = useState<any[]>([]);
   const [currentDay, setCurrentDay] = useState<number>(0);
-  const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
+  const [flippedCards, setFlippedCards] = useState<Set<string>>(new Set());
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -63,23 +63,23 @@ export function MasonryView({ actions }: MasonryViewProps) {
     setIsMounted(true);
   }, [actions]);
 
-  const handleCardClick = (date: number, e: React.MouseEvent) => {
+  const handleCardClick = (key: string, e: React.MouseEvent) => {
     e.preventDefault();
     setFlippedCards((prev) => {
       const newSet = new Set(prev);
-      if (newSet.has(date)) {
-        newSet.delete(date);
+      if (newSet.has(key)) {
+        newSet.delete(key);
       } else {
-        newSet.add(date);
+        newSet.add(key);
       }
       return newSet;
     });
   };
 
-  const handleLinkClick = (link: string, date: number, e: React.MouseEvent) => {
-    if (!flippedCards.has(date)) {
+  const handleLinkClick = (link: string, key: string, e: React.MouseEvent) => {
+    if (!flippedCards.has(key)) {
       e.preventDefault();
-      setFlippedCards((prev) => new Set(prev).add(date));
+      setFlippedCards((prev) => new Set(prev).add(key));
     } else {
       // Allow the link to work normally
       window.open(link, "_blank", "noopener,noreferrer");
@@ -131,14 +131,16 @@ export function MasonryView({ actions }: MasonryViewProps) {
       >
         <Masonry>
           {shuffledActions.map((action) => {
-            const isToday = action.date === currentDay;
-            const isFlipped = flippedCards.has(action.date);
+            const actionDay = action.date.getDate;
+            const actionKey = action.date.toISOString();
+            const isToday = actionDay === currentDay;
+            const isFlipped = flippedCards.has(actionKey);
 
             return (
               <div
-                key={action.date}
+                key={actionKey}
                 className={`card-flip cursor-pointer rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] ${isFlipped ? "flipped" : ""}`}
-                onClick={(e) => handleCardClick(action.date, e)}
+                onClick={(e) => handleCardClick(actionKey, e)}
               >
                 <div
                   className="card-flip-inner"
@@ -162,7 +164,7 @@ export function MasonryView({ actions }: MasonryViewProps) {
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                       <div className="text-center p-4">
                         <div className="text-7xl font-bold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                          {action.date}
+                          {`${action.date.getMonth() + 1}/${action.date.getDate()}`}
                         </div>
                         {isToday && (
                           <div className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg mt-2 inline-block">
@@ -176,7 +178,7 @@ export function MasonryView({ actions }: MasonryViewProps) {
                   {/* Back: Content (Image + Headline + Link) */}
                   <div
                     className="card-back bg-white flex flex-col h-full rounded-lg overflow-hidden"
-                    onClick={(e) => handleLinkClick(action.link, action.date, e)}
+                    onClick={(e) => handleLinkClick(action.link_url, actionKey, e)}
                   >
                     <div className="relative h-full flex flex-col">
                       {/* Image header on back - flexible height, can shrink */}
@@ -195,7 +197,7 @@ export function MasonryView({ actions }: MasonryViewProps) {
                             {action.headline}
                           </h3>
                           <p className="text-zinc-600 text-sm">
-                            {action.Details}
+                            {action.details}
                           </p>
                         </div>
 

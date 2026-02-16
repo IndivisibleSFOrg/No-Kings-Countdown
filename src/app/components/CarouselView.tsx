@@ -23,7 +23,7 @@ export function CarouselView({ actions }: CarouselViewProps) {
 
     // Auto-scroll to current day on mount and refresh slider
     if (sliderRef.current) {
-      const currentIndex = actions.findIndex((a) => a.date === day);
+      const currentIndex = actions.findIndex((a) => a.date.getDate() === day);
       if (currentIndex >= 0) {
         sliderRef.current.slickGoTo(currentIndex);
       }
@@ -130,13 +130,14 @@ export function CarouselView({ actions }: CarouselViewProps) {
       `}</style>
       <Slider ref={sliderRef} {...settings}>
         {actions.map((action) => {
-          const isToday = action.date === currentDay;
-          const isPast = action.date < currentDay;
+          const actionDay = action.date.getDate();
+          const isToday = actionDay === currentDay;
+          const isPast = actionDay < currentDay;
 
           return (
-            <div key={action.date} className="px-1 md:px-3">
+            <div key={action.date.toISOString()} className="px-1 md:px-3">
               <a
-                href={action.link}
+                href={action.link_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`block overflow-hidden rounded-xl border-4 transition-all duration-300 hover:shadow-2xl ${isToday
@@ -160,7 +161,7 @@ export function CarouselView({ actions }: CarouselViewProps) {
                         : "bg-red-500"
                       }`}
                   >
-                    {action.date}
+                    {`${action.date.getMonth() + 1}/${action.date.getDate()}`}
                   </div>
                   {isToday && (
                     <div className="absolute top-4 left-4 bg-blue-600 text-white px-4 py-2 rounded-full font-semibold shadow-lg">
