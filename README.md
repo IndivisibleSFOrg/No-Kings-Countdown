@@ -78,7 +78,8 @@ yarn preview
 │       └── main.css          # Global styles
 ├── components/
 │   ├── CountdownDisplay.vue  # Main display component
-│   ├── MasonryView.vue       # Grid/masonry view
+│   ├── GridView.vue          # Fixed grid view with flip cards
+│   ├── MasonryWallView.vue   # True masonry layout (vue-masonry-wall)
 │   └── CarouselView.vue      # Carousel view
 ├── composables/
 │   ├── dateHelpers.ts        # Date utility functions

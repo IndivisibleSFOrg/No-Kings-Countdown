@@ -58,7 +58,7 @@
 
     <!-- Main Content -->
     <main class="py-8 md:py-12 max-w-7xl mx-auto px-4">
-      <MasonryView v-if="layout === 'masonry'" :actions="actions" />
+      <GridView v-if="layout === 'masonry'" :actions="actions" />
       <MasonryWallView v-else-if="layout === 'masonryWall'" :actions="actions" />
       <div v-else class="max-w-6xl mx-auto">
         <CarouselView :key="'carousel'" :actions="actions" />
