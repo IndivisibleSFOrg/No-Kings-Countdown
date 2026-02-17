@@ -25,7 +25,19 @@
               ]"
             >
               <Grid3x3 :size="16" />
-              <span class="hidden sm:inline">Grid View</span>
+              <span class="hidden sm:inline">Grid</span>
+            </button>
+            <button
+              @click="layout = 'masonryWall'"
+              :class="[
+                'flex items-center gap-2 px-4 py-2 rounded-md transition-all',
+                layout === 'masonryWall'
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'text-gray-700 hover:bg-gray-200'
+              ]"
+            >
+              <LayoutGrid :size="16" />
+              <span class="hidden sm:inline">Masonry</span>
             </button>
             <button
               @click="layout = 'carousel'"
@@ -37,7 +49,7 @@
               ]"
             >
               <Image :size="16" />
-              <span class="hidden sm:inline">Carousel View</span>
+              <span class="hidden sm:inline">Carousel</span>
             </button>
           </div>
         </div>
@@ -47,6 +59,7 @@
     <!-- Main Content -->
     <main class="py-8 md:py-12 max-w-7xl mx-auto px-4">
       <MasonryView v-if="layout === 'masonry'" :actions="actions" />
+      <MasonryWallView v-else-if="layout === 'masonryWall'" :actions="actions" />
       <div v-else class="max-w-6xl mx-auto">
         <CarouselView :key="'carousel'" :actions="actions" />
       </div>
@@ -68,7 +81,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Grid3x3, Image } from 'lucide-vue-next';
+import { Grid3x3, Image, LayoutGrid } from 'lucide-vue-next';
 import type { CountdownItem } from '~/composables/googleSheets';
 
 interface Props {
@@ -77,6 +90,6 @@ interface Props {
 
 defineProps<Props>();
 
-type LayoutType = 'masonry' | 'carousel';
+type LayoutType = 'masonry' | 'masonryWall' | 'carousel';
 const layout = ref<LayoutType>('carousel');
 </script>

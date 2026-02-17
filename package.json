@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@nuxt/image": "^1.8.1",
+    "@yeger/vue-masonry-wall": "^5.0.15",
     "lucide-vue-next": "^0.460.0",
     "nuxt": "^3.14.1592",
     "papaparse": "^5.5.3",

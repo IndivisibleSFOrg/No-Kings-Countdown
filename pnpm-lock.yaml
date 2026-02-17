@@ -11,6 +11,9 @@ importers:
       '@nuxt/image':
         specifier: ^1.8.1
         version: 1.11.0(db0@0.3.4)(ioredis@5.9.3)(magicast@0.5.2)
+      '@yeger/vue-masonry-wall':
+        specifier: ^5.0.15
+        version: 5.1.5(vue@3.5.28(typescript@5.9.3))
       lucide-vue-next:
         specifier: ^0.460.0
         version: 0.460.0(vue@3.5.28(typescript@5.9.3))
@@ -1474,6 +1477,20 @@ packages:
 
   '@vue/shared@3.5.28':
     resolution: {integrity: sha512-cfWa1fCGBxrvaHRhvV3Is0MgmrbSCxYTXCSCau2I0a1Xw1N1pHAvkWCiXPRAqjvToILvguNyEwjevUqAuBQWvQ==}
+
+  '@yeger/debounce@2.0.17':
+    resolution: {integrity: sha512-wz9ARkGnY25yToyaZaCz887aRxsIg96uI/waBLkV/Qfh9/VHP+C6uAFpOg8FPba0KMS2QYo2dhCOqPvCoDigyA==}
+
+  '@yeger/vue-lib-adapter@2.0.16':
+    resolution: {integrity: sha512-fxD0xY5dOy5G/c59gQ/IMbZl1MWw8tPK+moJu2WiUqpFrRQBz2U8bx95k0VSFMZqBCTEhXXomCi93C7FVRQB6A==}
+
+  '@yeger/vue-masonry-wall-core@5.0.22':
+    resolution: {integrity: sha512-mHiIQ/DeGUxhB3VKcvcv/lo1MLsJPjDA8RCQQl04mFtHerlNBPYHE0cBdzQOMSAdpOOO6QQ6vpSwQloYi8h6Mg==}
+
+  '@yeger/vue-masonry-wall@5.1.5':
+    resolution: {integrity: sha512-hxJBwg7fKLALKZuaHatBhbZtQu4FFPQkTSEPiSmhlHuAH2kUAsGEuQcsjvq3sc/xeF0CAwjz7T49QIxCgRBc1Q==}
+    peerDependencies:
+      vue: ^3.0.0
 
   abbrev@3.0.1:
     resolution: {integrity: sha512-AO2ac6pjRB3SJmGJo+v5/aK6Omggp6fsLrs6wN9bd35ulu4cCwaAU9+7ZhXjeqHVkaHThLuzH0nZr0YpCDhygg==}
@@ -5987,6 +6004,20 @@ snapshots:
       vue: 3.5.28(typescript@5.9.3)
 
   '@vue/shared@3.5.28': {}
+
+  '@yeger/debounce@2.0.17': {}
+
+  '@yeger/vue-lib-adapter@2.0.16': {}
+
+  '@yeger/vue-masonry-wall-core@5.0.22':
+    dependencies:
+      '@yeger/debounce': 2.0.17
+      '@yeger/vue-lib-adapter': 2.0.16
+
+  '@yeger/vue-masonry-wall@5.1.5(vue@3.5.28(typescript@5.9.3))':
+    dependencies:
+      '@yeger/vue-masonry-wall-core': 5.0.22
+      vue: 3.5.28(typescript@5.9.3)
 
   abbrev@3.0.1: {}
 
