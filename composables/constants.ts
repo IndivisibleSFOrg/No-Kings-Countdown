@@ -1,1 +1,1 @@
-export const defaultImage = "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y29tbXVuaXR5fGVufDB8fDB8fHww";
+export const defaultImage = "/christy-dalmat-y_z3rURYpR0-unsplash.webp";
