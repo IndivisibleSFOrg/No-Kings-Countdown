@@ -80,6 +80,7 @@ yarn preview
 │   ├── CountdownDisplay.vue  # Main display component
 │   ├── GridView.vue          # Fixed grid view with flip cards
 │   ├── MasonryWallView.vue   # True masonry layout (vue-masonry-wall)
+│   ├── CalendarView.vue      # Calendar view (Feb 16 - Mar 28)
 │   └── CarouselView.vue      # Carousel view
 ├── composables/
 │   ├── dateHelpers.ts        # Date utility functions
@@ -94,8 +95,9 @@ yarn preview
 
 ## Features
 
-- **Two View Modes**: Switch between masonry grid and carousel views
+- **Four View Modes**: Switch between grid, masonry, calendar, and carousel views
 - **Interactive Cards**: Flip cards to reveal action details
+- **Calendar Layout**: View events in a traditional calendar format (Feb 16 - Mar 28)
 - **Current Day Highlighting**: Automatically highlights today's action
 - **Responsive Design**: Optimized for mobile and desktop
 - **Static Site Generation**: Deploys as a static site for GitHub Pages

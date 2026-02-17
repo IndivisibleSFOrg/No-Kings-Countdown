@@ -14,7 +14,7 @@
           </div>
 
           <!-- Layout Switcher -->
-          <div class="flex gap-2 bg-gray-100 p-1 rounded-lg">
+          <div class="flex gap-2 bg-gray-100 p-1 rounded-lg flex-wrap">
             <button
               @click="layout = 'masonry'"
               :class="[
@@ -40,6 +40,18 @@
               <span class="hidden sm:inline">Masonry</span>
             </button>
             <button
+              @click="layout = 'calendar'"
+              :class="[
+                'flex items-center gap-2 px-4 py-2 rounded-md transition-all',
+                layout === 'calendar'
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'text-gray-700 hover:bg-gray-200'
+              ]"
+            >
+              <Calendar :size="16" />
+              <span class="hidden sm:inline">Calendar</span>
+            </button>
+            <button
               @click="layout = 'carousel'"
               :class="[
                 'flex items-center gap-2 px-4 py-2 rounded-md transition-all',
@@ -60,6 +72,7 @@
     <main class="py-8 md:py-12 max-w-7xl mx-auto px-4">
       <GridView v-if="layout === 'masonry'" :actions="actions" />
       <MasonryWallView v-else-if="layout === 'masonryWall'" :actions="actions" />
+      <CalendarView v-else-if="layout === 'calendar'" :actions="actions" />
       <div v-else class="max-w-6xl mx-auto">
         <CarouselView :key="'carousel'" :actions="actions" />
       </div>
@@ -81,7 +94,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Grid3x3, Image, LayoutGrid } from 'lucide-vue-next';
+import { Grid3x3, Image, LayoutGrid, Calendar } from 'lucide-vue-next';
 import type { CountdownItem } from '~/composables/googleSheets';
 
 interface Props {
@@ -90,6 +103,6 @@ interface Props {
 
 defineProps<Props>();
 
-type LayoutType = 'masonry' | 'masonryWall' | 'carousel';
+type LayoutType = 'masonry' | 'masonryWall' | 'calendar' | 'carousel';
 const layout = ref<LayoutType>('carousel');
 </script>
