@@ -4,7 +4,7 @@
       <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
     </div>
     <div v-else class="calendar-view">
-      <h2 class="text-3xl font-bold text-gray-900 mb-4">February 1 - March 28, 2026</h2>
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">{{ calendarHeading }}</h2>
       <div class="calendar-grid">
         <!-- Day headers (Monday as week start) -->
         <div v-for="day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" 
@@ -16,7 +16,7 @@
         <!-- Calendar cells -->
         <div v-for="(dateInfo, index) in allDates" :key="`${dateInfo.month}-${dateInfo.date}-${index}`" class="calendar-cell">
           <CalendarCard
-            v-if="dateInfo.date !== null"
+            v-if="dateInfo.date !== null && dateInfo.month !== null"
             :date="dateInfo.date"
             :month="dateInfo.month"
             :action="getActionForDate(dateInfo.date, dateInfo.month)"
@@ -46,37 +46,45 @@ const currentDay = ref<number>(0);
 const currentMonth = ref<number>(0);
 const isMounted = ref(false);
 
-// Calendar date range settings
-const CALENDAR_START_DATE = 1;  // Start day of February
-const CALENDAR_START_MONTH = 2; // February
-const CALENDAR_END_DATE = 28;   // End day of March
-const CALENDAR_END_MONTH = 3;   // March
+// Derive the calendar date range from the data
+const calendarRange = computed(() => {
+  if (!props.actions.length) return null;
+  const times = props.actions.map(a => a.date.getTime());
+  return {
+    min: new Date(Math.min(...times)),
+    max: new Date(Math.max(...times)),
+  };
+});
 
-// Create array of all dates from Feb 1 to Mar 28
-// Feb 1, 2026 is a Sunday, so we offset by 6 to start on Monday
+const calendarHeading = computed(() => {
+  if (!calendarRange.value) return '';
+  const { min, max } = calendarRange.value;
+  const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+  const yearSuffix = min.getFullYear() === max.getFullYear()
+    ? `, ${max.getFullYear()}`
+    : `, ${min.getFullYear()} – ${max.getFullYear()}`;
+  return `${fmt(min)} – ${fmt(max)}${yearSuffix}`;
+});
+
 const allDates = computed(() => {
-  const dates = [];
-  
-  // Calculate offset for Monday start
-  // Feb 1, 2026 is Sunday (day 0), so offset = 6 days to show empty cells before it
-  const febStartDay = new Date(2026, CALENDAR_START_MONTH - 1, CALENDAR_START_DATE).getDay();
-  const offsetDays = febStartDay === 0 ? 6 : febStartDay - 1; // Monday = 0 offset, Sunday = 6 offset
-  
-  // Add empty cells for alignment
+  if (!calendarRange.value) return [];
+  const { min, max } = calendarRange.value;
+  const dates: { date: number | null; month: number | null }[] = [];
+
+  // Calculate offset for Monday start (Mon=0 … Sun=6)
+  const startDay = min.getDay();
+  const offsetDays = startDay === 0 ? 6 : startDay - 1;
   for (let i = 0; i < offsetDays; i++) {
     dates.push({ date: null, month: null });
   }
-  
-  // February dates (from start date to 28)
-  for (let day = CALENDAR_START_DATE; day <= 28; day++) {
-    dates.push({ date: day, month: 2 });
+
+  // Iterate day-by-day from min to max
+  const current = new Date(min);
+  while (current <= max) {
+    dates.push({ date: current.getDate(), month: current.getMonth() + 1 });
+    current.setDate(current.getDate() + 1);
   }
-  
-  // March dates (1 to end date)
-  for (let day = 1; day <= CALENDAR_END_DATE; day++) {
-    dates.push({ date: day, month: 3 });
-  }
-  
+
   return dates;
 });
 
