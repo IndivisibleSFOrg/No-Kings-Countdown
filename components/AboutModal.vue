@@ -37,15 +37,11 @@
           </p>
 
           <div>
-            <h3 class="font-semibold text-isf-navy text-base mb-2">What kinds of actions are available?</h3>
+            <h3 class="font-semibold text-isf-navy text-base mb-2">Actions will be:</h3>
             <ul class="space-y-1.5">
               <li class="flex gap-2 text-base text-isf-navy leading-relaxed">
                 <span class="mt-0.5 text-isf-blue flex-shrink-0">✓</span>
-                <span><strong>Completable in under 15 minutes</strong> — no lengthy commitments or sign-ups required</span>
-              </li>
-              <li class="flex gap-2 text-base text-isf-navy leading-relaxed">
-                <span class="mt-0.5 text-isf-blue flex-shrink-0">✓</span>
-                <span><strong>Concrete and specific</strong> — a clear task with a defined end state</span>
+                <span><strong>Tied to the resistance</strong> — focused on democratic norms, anti-authoritarianism, or civic engagement</span>
               </li>
               <li class="flex gap-2 text-base text-isf-navy leading-relaxed">
                 <span class="mt-0.5 text-isf-blue flex-shrink-0">✓</span>
@@ -53,7 +49,11 @@
               </li>
               <li class="flex gap-2 text-base text-isf-navy leading-relaxed">
                 <span class="mt-0.5 text-isf-blue flex-shrink-0">✓</span>
-                <span><strong>Tied to the resistance</strong> — focused on democratic norms, anti-authoritarianism, or civic engagement</span>
+                <span><strong>Concrete and specific</strong> — a clear task with a defined end state</span>
+              </li>
+              <li class="flex gap-2 text-base text-isf-navy leading-relaxed">
+                <span class="mt-0.5 text-isf-blue flex-shrink-0">✓</span>
+                <span><strong>Completable in under 15 minutes</strong> — no lengthy commitments or sign-ups required</span>
               </li>
               <li class="flex gap-2 text-base text-isf-navy leading-relaxed">
                 <span class="mt-0.5 text-isf-blue flex-shrink-0">✓</span>
