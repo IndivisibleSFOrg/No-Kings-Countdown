@@ -92,9 +92,9 @@
       </div>
 
       <!-- Back -->
-      <div class="action-card-face action-card-back rounded-lg flex flex-col">
+      <div class="action-card-face action-card-back rounded-lg overflow-hidden flex flex-col">
         <!-- Upper 50%: image -->
-        <div class="relative h-1/2 flex-shrink-0 rounded-t-lg overflow-hidden">
+        <div class="relative h-1/2 flex-shrink-0">
           <img
             :src="action.image_back.image_url || defaultImage"
             :alt="action.headline"
@@ -119,7 +119,7 @@
         </div>
 
         <!-- Lower 50%: headline + details preview + actions -->
-        <div class="h-1/2 flex-shrink-0 bg-white rounded-b-lg flex flex-col pl-3 pr-4 pt-2 pb-3 gap-1 min-h-0">
+        <div class="h-1/2 flex-shrink-0 bg-white flex flex-col px-3 pt-2 pb-3 gap-1 min-h-0">
           <p
             class="font-bold text-isf-navy text-sm leading-snug line-clamp-2 flex-shrink-0"
             v-html="renderInlineMarkdown(action.headline)"
