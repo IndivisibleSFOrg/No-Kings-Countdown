@@ -151,7 +151,7 @@
           </a>
 
           <!-- Bottom row: details (left) + share + complete (right) -->
-          <div class="flex items-center justify-between flex-shrink-0">
+          <div class="flex items-center justify-between flex-shrink-0 mt-auto">
             <!-- Details link — only when modal is available and content overflows -->
             <button
               v-if="allowModal && isOverflowing"
