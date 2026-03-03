@@ -119,7 +119,7 @@
         </div>
 
         <!-- Lower 50%: headline + details preview + actions -->
-        <div class="h-1/2 flex-shrink-0 bg-white flex flex-col px-3 pt-2 pb-3 gap-1 min-h-0">
+        <div class="h-1/2 flex-shrink-0 bg-white relative flex flex-col px-3 pt-2 pb-12 gap-1 min-h-0">
           <p
             class="font-bold text-isf-navy text-sm leading-snug line-clamp-2 flex-shrink-0"
             v-html="renderInlineMarkdown(action.headline)"
@@ -150,8 +150,9 @@
             </svg>
           </a>
 
-          <!-- Bottom row: details (left) + share + complete (right) -->
-          <div class="flex items-center justify-between flex-shrink-0 mt-auto">
+          <!-- Bottom row + share notice: absolutely pinned to bottom of lower half -->
+          <div class="absolute bottom-0 left-0 right-0 px-3 pb-3 flex flex-col-reverse gap-1">
+          <div class="flex items-center justify-between">
             <!-- Details link — only when modal is available and content overflows -->
             <button
               v-if="allowModal && isOverflowing"
@@ -209,11 +210,12 @@
           >
             <div
               v-if="shareNotice"
-              class="text-[10px] text-isf-navy bg-isf-navy/10 rounded px-2 py-1 text-center leading-tight flex-shrink-0"
+              class="text-[10px] text-isf-navy bg-isf-navy/10 rounded px-2 py-1 text-center leading-tight"
             >
               {{ shareNotice }}
             </div>
           </Transition>
+          </div>
         </div>
       </div>
     </div>
