@@ -139,6 +139,23 @@
             v-html="renderMarkdown(action.details)"
           />
 
+          <!-- CTA link -->
+          <a
+            v-if="!isFuture && action.link_url && action.link_url !== '#'"
+            :href="action.link_url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-1.5 bg-isf-red hover:bg-isf-red-dark text-white font-semibold text-xs px-3 py-2 rounded-lg transition-colors flex-shrink-0"
+            @click.stop
+          >
+            {{ action.link_text || 'Learn more' }}
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
+          </a>
+
           <!-- Bottom row: details (left) + share + complete (right) -->
           <div class="flex items-center justify-between flex-shrink-0">
             <!-- Details link — only when modal is available and content overflows -->
