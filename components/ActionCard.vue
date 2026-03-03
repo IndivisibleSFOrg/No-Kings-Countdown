@@ -73,19 +73,13 @@
         <button
           v-if="!isFuture"
           class="absolute bottom-2 right-2 rounded-full w-7 h-7 flex items-center justify-center shadow transition-colors"
-          :class="isComplete(action.date) ? 'bg-isf-green hover:brightness-110' : isToday ? 'bg-isf-gold hover:brightness-110' : 'bg-isf-red hover:brightness-110'"
+          :class="isComplete(action.date) ? 'bg-isf-green hover:brightness-110' : isToday ? 'bg-gray-400 hover:brightness-110' : 'bg-isf-red hover:brightness-110'"
           :title="isComplete(action.date) ? 'Completed – click for details' : isToday ? 'Still time today – click for details' : 'Not completed – click for details'"
           @click.stop="openDetail(props.action)"
         >
-          <template v-if="isComplete(action.date)">
+          <template v-if="isComplete(action.date) || isToday">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12" />
-            </svg>
-          </template>
-          <template v-else-if="isToday">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-              <circle cx="12" cy="17" r="0.5" fill="currentColor" stroke="none" />
             </svg>
           </template>
           <template v-else>
@@ -187,19 +181,13 @@
               <!-- Completion toggle (directly toggles completion, no modal) -->
               <button
                 class="rounded-full w-7 h-7 flex items-center justify-center shadow transition-colors"
-                :class="isComplete(action.date) ? 'bg-isf-green hover:brightness-110' : isToday ? 'bg-isf-gold hover:brightness-110' : 'bg-isf-red hover:brightness-110'"
-                :title="isComplete(action.date) ? 'Mark incomplete' : isToday ? 'Mark complete' : 'Mark complete'"
+                :class="isComplete(action.date) ? 'bg-isf-green hover:brightness-110' : isToday ? 'bg-gray-400 hover:brightness-110' : 'bg-isf-red hover:brightness-110'"
+                :title="isComplete(action.date) ? 'Mark incomplete' : 'Mark complete'"
                 @click.stop="handleToggleComplete(action.date)"
               >
-                <template v-if="isComplete(action.date)">
+                <template v-if="isComplete(action.date) || isToday">
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </template>
-                <template v-else-if="isToday">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                    <circle cx="12" cy="17" r="0.5" fill="currentColor" stroke="none" />
                   </svg>
                 </template>
                 <template v-else>
