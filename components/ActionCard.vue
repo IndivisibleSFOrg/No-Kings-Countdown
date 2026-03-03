@@ -57,8 +57,8 @@
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            class="w-12 h-12 text-isf-blue"
-            style="filter: drop-shadow(0 0 6px rgba(255,255,255,0.9)) drop-shadow(0 0 2px rgba(255,255,255,0.9))"
+            class="w-[40%] h-[40%] text-isf-blue"
+            style="filter: drop-shadow(0 0 24px rgba(255,255,255,1)) drop-shadow(0 0 12px rgba(255,255,255,1)) drop-shadow(0 0 6px rgba(255,255,255,0.95))"
             aria-label="Locked"
           >
             <path
