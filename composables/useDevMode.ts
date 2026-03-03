@@ -26,10 +26,10 @@ export const useDevMode = () => {
   const autoValue = computed(() => {
     // env= query param is only honored in local dev mode
     if (import.meta.dev) {
-      if (route.query.env === 'prd') return false;
       if (route.query.env === 'dev') return true;
+      if (route.query.env === 'prd') return false;
     }
-    return import.meta.dev;
+    return false; // default to prd even on localhost
   });
 
   const isDevMode = computed(() => {
