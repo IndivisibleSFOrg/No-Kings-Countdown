@@ -94,8 +94,8 @@
       <!-- Back -->
       <div
         class="action-card-face action-card-back rounded-lg overflow-hidden flex flex-col"
-        :class="{ 'cursor-pointer': allowModal && !isFuture }"
-        @click="allowModal && !isFuture ? openDetail(props.action) : undefined"
+        :class="{ 'cursor-pointer': !isFuture }"
+        @click="!isFuture ? openDetail(props.action) : undefined"
       >
         <!-- Upper 50%: image -->
         <div class="relative h-1/2 flex-shrink-0">
