@@ -4,11 +4,16 @@
       <div
         v-for="action in sortedActions"
         :key="action.date.toISOString()"
-
+        :id="'action-' + formatDateKey(action.date)"
         :class="{ 'today-card': isTodayDate(action.date) }"
         style="border-radius: 0.75rem;"
       >
-        <ActionCard :action="action" :show-day-name="true" date-label-size="text-3xl" />
+        <ActionCard
+          :action="action"
+          :show-day-name="true"
+          date-label-size="text-3xl"
+          :highlight="highlightDate === formatDateKey(action.date)"
+        />
       </div>
     </div>
   </div>
@@ -18,9 +23,11 @@
 import { computed } from 'vue';
 import ActionCard from './ActionCard.vue';
 import type { ActionItem } from '~/composables/googleSheets';
+import { formatDateKey } from '~/composables/dateHelpers';
 
 interface Props {
   actions: ActionItem[];
+  highlightDate?: string | null;
 }
 
 const props = defineProps<Props>();
