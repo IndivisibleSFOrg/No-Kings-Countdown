@@ -102,6 +102,7 @@
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center justify-center gap-2 bg-isf-red hover:bg-isf-red-dark text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition-colors"
+            @click="trackCtaClick(formatDateKey(action.date), action.link_url)"
           >
             {{ action.link_text || 'Learn more' }}
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -147,7 +148,7 @@ const props = defineProps<Props>()
 const emit = defineEmits<{ close: [] }>()
 
 const { isComplete, toggleComplete, completedKeys } = useActionCompletion()
-const { trackShareDetail, trackCompleteAction } = useAnalytics()
+const { trackShareDetail, trackCompleteAction, trackUncompleteAction, trackCtaClick } = useAnalytics()
 const { startModalTour } = useModalTour()
 const { startShareTour } = useShareTour()
 const { settings } = useSettings()
@@ -161,6 +162,9 @@ function handleToggleComplete(date: Date) {
     if (completedKeys.value.size === 1 && !settings.value.tourSeenShare) {
       nextTick(() => setTimeout(() => startShareTour('#tour-action-share'), 300))
     }
+  }
+  else {
+    trackUncompleteAction(formatDateKey(date))
   }
 }
 
@@ -177,7 +181,7 @@ let shareNoticeTimer: ReturnType<typeof setTimeout> | null = null
 
 async function shareAction() {
   trackShareDetail(formatDateKey(props.action.date))
-  const shareTitle = `No Kings 3 Countdown: ${props.action.headline}`
+  const shareTitle = `No Kings Countdown: ${props.action.headline}`
   const shareText = props.action.social_message || props.action.details || ''
   const shareUrl = window.location.href
 

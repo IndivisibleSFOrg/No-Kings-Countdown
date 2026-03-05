@@ -17,6 +17,10 @@ import { onMounted } from 'vue'
 
 const { communityActions, loadData } = useGoogleSheetsData()
 const visibleActions = useVisibleActions(communityActions)
+const { trackFirstVisit } = useAnalytics()
 
-onMounted(loadData)
+onMounted(() => {
+  loadData()
+  trackFirstVisit()
+})
 </script>

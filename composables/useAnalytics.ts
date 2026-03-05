@@ -1,25 +1,60 @@
 export function useAnalytics() {
   const { gtag } = useGtag()
 
+  /** Fire once per device on true first visit (localStorage-backed). */
+  const trackFirstVisit = () => {
+    if (!import.meta.client)
+      return
+    const key = 'isf-visited'
+    if (!localStorage.getItem(key)) {
+      localStorage.setItem(key, new Date().toISOString())
+      gtag('event', 'first_visit_app', {
+        visit_date: new Date().toISOString().slice(0, 10),
+      })
+    }
+  }
+
   const trackViewDetail = (dateKey: string) => {
     gtag('event', 'view_detail', { date_key: dateKey })
-  }
-
-  const trackCardFlip = (dateKey: string) => {
-    gtag('event', 'card_flip', { date_key: dateKey })
-  }
-
-  const trackShareProgress = () => {
-    gtag('event', 'share_progress')
-  }
-
-  const trackShareDetail = (dateKey: string) => {
-    gtag('event', 'share_detail', { date_key: dateKey })
   }
 
   const trackCompleteAction = (dateKey: string) => {
     gtag('event', 'complete_action', { date_key: dateKey })
   }
 
-  return { trackViewDetail, trackCardFlip, trackShareProgress, trackShareDetail, trackCompleteAction }
+  const trackUncompleteAction = (dateKey: string) => {
+    gtag('event', 'uncomplete_action', { date_key: dateKey })
+  }
+
+  const trackShareDetail = (dateKey: string) => {
+    gtag('event', 'share_detail', { date_key: dateKey })
+  }
+
+  const trackShareProgress = () => {
+    gtag('event', 'share_progress')
+  }
+
+  const trackCtaClick = (dateKey: string, linkUrl: string) => {
+    gtag('event', 'cta_click', { date_key: dateKey, link_url: linkUrl })
+  }
+
+  const trackTourStarted = (tourName: string) => {
+    gtag('event', 'tour_started', { tour_name: tourName })
+  }
+
+  const trackTourCompleted = (tourName: string) => {
+    gtag('event', 'tour_completed', { tour_name: tourName })
+  }
+
+  return {
+    trackFirstVisit,
+    trackViewDetail,
+    trackCompleteAction,
+    trackUncompleteAction,
+    trackShareDetail,
+    trackShareProgress,
+    trackCtaClick,
+    trackTourStarted,
+    trackTourCompleted,
+  }
 }

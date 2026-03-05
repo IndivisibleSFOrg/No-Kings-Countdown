@@ -241,7 +241,7 @@ const _initToday = new Date()
 _initToday.setHours(0, 0, 0, 0)
 const isFlipped = ref(props.action.date <= _initToday)
 const { isComplete, toggleComplete, completedKeys } = useActionCompletion()
-const { trackShareDetail, trackCompleteAction } = useAnalytics()
+const { trackShareDetail, trackCompleteAction, trackUncompleteAction } = useAnalytics()
 const { startShareTour } = useShareTour()
 
 const dateLabel = computed(() => {
@@ -293,6 +293,9 @@ function handleToggleComplete(date: Date) {
     if (completedKeys.value.size === 1 && !settings.value.tourSeenShare) {
       nextTick(() => setTimeout(() => startShareTour(`#tour-card-share-${formatDateKey(date)}`), 300))
     }
+  }
+  else {
+    trackUncompleteAction(formatDateKey(date))
   }
 }
 

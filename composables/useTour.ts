@@ -35,6 +35,7 @@ function whenTourIdle(fn: () => void) {
 /** Tour for the main landing page. Call inside onMounted. */
 export function useHomeTour() {
   const { settings, set } = useSettings()
+  const { trackTourStarted, trackTourCompleted } = useAnalytics()
 
   const startHomeTour = () => {
     if (settings.value.tourSeenHome)
@@ -106,10 +107,12 @@ export function useHomeTour() {
       onDestroyed: () => {
         anyTourActive = false
         set('tourSeenHome', true)
+        trackTourCompleted('home')
       },
     })
 
     anyTourActive = true
+    trackTourStarted('home')
     driverObj.drive()
   }
 
@@ -119,6 +122,7 @@ export function useHomeTour() {
 /** Tour for the action-detail modal. Call inside onMounted of ActionModal. */
 export function useModalTour() {
   const { settings, set } = useSettings()
+  const { trackTourStarted, trackTourCompleted } = useAnalytics()
 
   const startModalTour = () => {
     if (settings.value.tourSeenModal)
@@ -163,10 +167,12 @@ export function useModalTour() {
       onDestroyed: () => {
         anyTourActive = false
         set('tourSeenModal', true)
+        trackTourCompleted('modal')
       },
     })
 
     anyTourActive = true
+    trackTourStarted('modal')
     driverObj.drive()
   }
 
@@ -176,6 +182,7 @@ export function useModalTour() {
 /** Tour shown immediately after the user completes their first action. */
 export function useShareTour() {
   const { settings, set } = useSettings()
+  const { trackTourStarted, trackTourCompleted } = useAnalytics()
 
   const _driveShare = (detailShareSelector?: string) => {
     if (settings.value.tourSeenShare)
@@ -219,10 +226,12 @@ export function useShareTour() {
       onDestroyed: () => {
         anyTourActive = false
         set('tourSeenShare', true)
+        trackTourCompleted('share')
       },
     })
 
     anyTourActive = true
+    trackTourStarted('share')
     driverObj.drive()
   }
 
