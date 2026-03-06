@@ -3,7 +3,7 @@ import { execSync } from 'node:child_process'
 
 const gitDescribe = (() => {
   try {
-    return execSync('git describe --always --dirty=+').toString().trim()
+    return execSync('git describe --always --tags --dirty=+').toString().trim()
   }
   catch {
     return 'dev'
