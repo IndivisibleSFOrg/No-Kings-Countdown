@@ -54,5 +54,13 @@ export default {
       },
     },
   },
+  safelist: [
+    'text-base',
+    'text-lg',
+    'text-xl',
+    'text-2xl',
+    'text-3xl',
+    'text-4xl',
+  ],
   plugins: [],
 }

@@ -21,25 +21,17 @@
         >
         <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent" />
 
-        <!-- Date: upper left -->
-        <div class="absolute top-2 left-2 text-white font-bold leading-none drop-shadow" :class="props.dateLabelSize ?? 'text-2xl'">
-          {{ dateLabel }}
-        </div>
-
-        <!-- Today badge -->
-        <div
-          v-if="isToday"
-          class="absolute top-2 right-2 bg-state-today text-white text-xs font-semibold px-2 py-0.5 rounded-full"
-        >
-          Today
-        </div>
-
-        <!-- Testing badge (dev mode only) -->
-        <div
-          v-if="isDev && action.labels.includes('testing')"
-          class="absolute top-2 right-2 bg-yellow-400 text-black text-xs font-semibold px-2 py-0.5 rounded-full"
-        >
-          TEST
+        <!-- Date + pills: upper left column -->
+        <div class="absolute top-2 left-2 flex flex-col items-start gap-1">
+          <div class="text-white font-bold leading-none drop-shadow" :style="{ fontSize: props.dateLabelSize ?? '1.5rem' }">
+            {{ dateLabel }}
+          </div>
+          <div v-if="isToday" class="bg-state-today text-white text-xs font-semibold px-2 py-0.5 rounded-full">
+            Today
+          </div>
+          <div v-if="isDev && action.labels.includes('testing')" class="bg-yellow-400 text-black text-xs font-semibold px-2 py-0.5 rounded-full">
+            TEST
+          </div>
         </div>
 
         <!-- Image attribution: lower left -->
@@ -73,18 +65,33 @@
           </svg>
         </div>
 
-        <!-- Completion badge (clickable → opens detail) -->
-        <button
-          v-if="!isFuture"
-          class="absolute bottom-2 right-2 rounded-full w-7 h-7 flex items-center justify-center shadow transition-colors"
-          :class="isComplete(action.date) ? 'bg-state-complete hover:brightness-110' : 'bg-state-incomplete hover:brightness-110'"
-          :title="isComplete(action.date) ? 'Completed – click for details' : 'Not completed – click for details'"
-          @click.stop="openDetail(props.action)"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-        </button>
+        <!-- Share + completion: upper right -->
+        <div v-if="!isFuture" class="absolute top-2 right-2 flex items-center gap-1.5">
+          <button
+            :id="`tour-card-share-${formatDateKey(action.date)}`"
+            class="text-white/80 hover:text-white transition-colors p-0.5 drop-shadow"
+            aria-label="Share"
+            @click.stop="shareAction"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3" />
+              <circle cx="6" cy="12" r="3" />
+              <circle cx="18" cy="19" r="3" />
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+            </svg>
+          </button>
+          <button
+            class="rounded-full w-7 h-7 flex items-center justify-center shadow transition-colors"
+            :class="isComplete(action.date) ? 'bg-state-complete hover:brightness-110' : 'bg-state-incomplete hover:brightness-110'"
+            :title="isComplete(action.date) ? 'Completed – click for details' : 'Not completed – click for details'"
+            @click.stop="openDetail(props.action)"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <!-- Back -->
@@ -102,9 +109,45 @@
             referrerpolicy="no-referrer"
           >
           <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent" />
-          <!-- Date: upper left -->
-          <div class="absolute top-2 left-2 text-white font-bold leading-none drop-shadow" :class="props.dateLabelSize ?? 'text-2xl'">
-            {{ dateLabel }}
+          <!-- Date + pills: upper left column -->
+          <div class="absolute top-2 left-2 flex flex-col items-start gap-1">
+            <div class="text-white font-bold leading-none drop-shadow" :style="{ fontSize: props.dateLabelSize ?? '1.5rem' }">
+              {{ dateLabel }}
+            </div>
+            <div v-if="isToday" class="bg-state-today text-white text-xs font-semibold px-2 py-0.5 rounded-full">
+              Today
+            </div>
+            <div v-if="isDev && action.labels.includes('testing')" class="bg-yellow-400 text-black text-xs font-semibold px-2 py-0.5 rounded-full">
+              TEST
+            </div>
+          </div>
+
+          <!-- Share + completion: upper right -->
+          <div v-if="!isFuture || isDev" class="absolute top-2 right-2 flex items-center gap-1.5">
+            <button
+              :id="`tour-card-share-${formatDateKey(action.date)}`"
+              class="text-white/80 hover:text-white transition-colors p-0.5 drop-shadow"
+              aria-label="Share"
+              @click.stop="shareAction"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+              </svg>
+            </button>
+            <button
+              class="rounded-full w-7 h-7 flex items-center justify-center shadow transition-colors"
+              :class="isComplete(action.date) ? 'bg-state-complete hover:brightness-110' : 'bg-state-incomplete hover:brightness-110'"
+              :title="isComplete(action.date) ? 'Mark incomplete' : 'Mark complete'"
+              @click.stop="handleToggleComplete(action.date)"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </button>
           </div>
 
           <!-- Image attribution: lower left -->
@@ -118,8 +161,8 @@
           >{{ action.image_back.artist_name || '©' }}</a>
         </div>
 
-        <!-- Lower 50%: headline + details preview + actions -->
-        <div class="h-1/2 flex-shrink-0 bg-white relative flex flex-col px-3 pt-2 pb-12 gap-1 min-h-0">
+        <!-- Lower 50%: headline + details preview + CTA -->
+        <div class="h-1/2 flex-shrink-0 bg-white flex flex-col px-3 pt-2 pb-3 gap-1 min-h-0">
           <p
             class="font-bold text-isf-blue-dark text-sm leading-snug line-clamp-2 flex-shrink-0"
             v-html="renderInlineMarkdown(action.headline)"
@@ -132,57 +175,8 @@
             v-html="renderMarkdown(action.details)"
           />
 
-          <!-- CTA link — only in grid view (not calendar, where the modal carries it) -->
-          <a
-            v-if="!allowModal && (!isFuture || isDev) && action.link_url && action.link_url !== '#'"
-            :href="action.link_url"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center justify-center gap-1.5 bg-btn-primary hover:bg-btn-primary-dark text-white font-semibold text-xs px-3 py-2 rounded-lg transition-colors flex-shrink-0"
-            @click.stop
-          >
-            {{ action.link_text || 'Learn more' }}
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-              <polyline points="15 3 21 3 21 9" />
-              <line x1="10" y1="14" x2="21" y2="3" />
-            </svg>
-          </a>
-
-          <!-- Bottom row + share notice: absolutely pinned to bottom of lower half -->
-          <div class="absolute bottom-0 left-0 right-0 px-3 pb-3 flex flex-col-reverse gap-1">
-            <div class="flex items-center justify-end">
-              <div v-if="!isFuture || isDev" class="flex items-center gap-1.5">
-                <!-- Share button -->
-                <button
-                  :id="`tour-card-share-${formatDateKey(action.date)}`"
-                  class="text-isf-slate hover:text-isf-red transition-colors p-0.5"
-                  aria-label="Share"
-                  @click.stop="shareAction"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="18" cy="5" r="3" />
-                    <circle cx="6" cy="12" r="3" />
-                    <circle cx="18" cy="19" r="3" />
-                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-                  </svg>
-                </button>
-
-                <!-- Completion toggle (directly toggles completion, no modal) -->
-                <button
-                  class="rounded-full w-7 h-7 flex items-center justify-center shadow transition-colors"
-                  :class="isComplete(action.date) ? 'bg-state-complete hover:brightness-110' : 'bg-state-incomplete hover:brightness-110'"
-                  :title="isComplete(action.date) ? 'Mark incomplete' : 'Mark complete'"
-                  @click.stop="handleToggleComplete(action.date)"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
+          <!-- Bottom: share notice + CTA -->
+          <div class="flex-shrink-0 flex flex-col gap-1.5 mt-auto pt-1">
             <!-- Share notice -->
             <Transition
               enter-active-class="transition-all duration-300 ease-out"
@@ -197,6 +191,23 @@
                 {{ shareNotice }}
               </div>
             </Transition>
+
+            <!-- CTA link — only in grid view (not calendar, where the modal carries it) -->
+            <a
+              v-if="!allowModal && (!isFuture || isDev) && action.link_url && action.link_url !== '#'"
+              :href="action.link_url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-1.5 bg-btn-primary hover:bg-btn-primary-dark text-white font-semibold text-xs px-3 py-2 rounded-lg transition-colors flex-shrink-0"
+              @click.stop
+            >
+              {{ action.link_text || 'Learn more' }}
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+            </a>
           </div>
         </div>
       </div>

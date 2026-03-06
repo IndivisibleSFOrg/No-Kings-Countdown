@@ -11,7 +11,7 @@
         <ActionCard
           :action="action"
           :show-day-name="true"
-          date-label-size="text-3xl"
+          date-label-size="1.875rem"
           :highlight="highlightDate === formatDateKey(action.date)"
         />
       </div>
