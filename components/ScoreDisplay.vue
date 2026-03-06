@@ -43,14 +43,16 @@
         <div
           v-for="dot in calendarDots"
           :key="dot.key"
-          class="w-3 h-3 rounded-sm transition-colors duration-300"
+          class="w-3 h-3 rounded-sm transition-colors duration-300 relative flex items-center justify-center"
           :class="[
             dot.empty ? '' : dot.cls,
             dot.action && (dot.isAvailable || isDevMode) ? 'cursor-pointer hover:brightness-110' : 'cursor-default',
           ]"
           :title="dot.label"
           @click="dot.action && (dot.isAvailable || isDevMode) ? openDetail(dot.action) : undefined"
-        />
+        >
+          <span v-if="dot.isShared" class="w-1 h-1 rounded-full bg-white/80 pointer-events-none" />
+        </div>
       </div>
     </div>
 
@@ -77,6 +79,7 @@ import { Share2 } from 'lucide-vue-next'
 import { computed, inject, ref } from 'vue'
 import { formatDateKey } from '~/composables/dateHelpers'
 import { useActionCompletion } from '~/composables/useActionCompletion'
+import { useActionSharing } from '~/composables/useActionSharing'
 
 interface Props {
   actions: ActionItem[]
@@ -84,6 +87,7 @@ interface Props {
 
 const props = defineProps<Props>()
 const { completedKeys } = useActionCompletion()
+const { sharedKeys } = useActionSharing()
 const { isDevMode } = useDevMode()
 const openDetail = inject<(action: ActionItem) => void>('openDetail', () => {})
 
@@ -144,7 +148,7 @@ const calendarDots = computed(() => {
   const first = campaignActions.value[0].date
   const last = campaignActions.value[campaignActions.value.length - 1].date
 
-  const cells: Array<{ key: string, action: ActionItem | null, label: string, isCompleted: boolean, isAvailable: boolean, isToday: boolean, cls: string, empty: boolean }> = []
+  const cells: Array<{ key: string, action: ActionItem | null, label: string, isCompleted: boolean, isAvailable: boolean, isToday: boolean, isShared: boolean, cls: string, empty: boolean }> = []
   const cur = new Date(first)
   // eslint-disable-next-line no-unmodified-loop-condition
   while (cur <= last) {
@@ -152,6 +156,7 @@ const calendarDots = computed(() => {
     const action = byKey.get(key)
     if (action) {
       const isCompleted = completedKeys.value.has(key)
+      const isShared = sharedKeys.value.has(key)
       const isAvailable = cur <= now
       const isToday = key === todayKey
       cells.push({
@@ -162,6 +167,7 @@ const calendarDots = computed(() => {
         isCompleted,
         isAvailable,
         isToday,
+        isShared,
         empty: false,
         cls: isCompleted
           ? 'bg-state-complete'
@@ -173,7 +179,7 @@ const calendarDots = computed(() => {
       })
     }
     else {
-      cells.push({ key: `empty-${key}`, action: null, label: '', isCompleted: false, isAvailable: false, isToday: false, empty: true, cls: '' })
+      cells.push({ key: `empty-${key}`, action: null, label: '', isCompleted: false, isAvailable: false, isToday: false, isShared: false, empty: true, cls: '' })
     }
     cur.setDate(cur.getDate() + 1)
   }
