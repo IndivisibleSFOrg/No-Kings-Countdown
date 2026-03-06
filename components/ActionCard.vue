@@ -64,7 +64,9 @@
         <div v-if="!isFuture" class="absolute top-2 right-2 flex items-center gap-1.5">
           <button
             :id="`tour-card-share-${formatDateKey(action.date)}`"
-            class="rounded-full w-7 h-7 flex items-center justify-center bg-state-incomplete hover:brightness-110 text-white transition-colors" aria-label="Share"
+            class="rounded-full w-7 h-7 flex items-center justify-center hover:brightness-110 text-white transition-colors"
+            :class="isShared(action.date) ? 'bg-state-complete' : 'bg-state-incomplete'"
+            aria-label="Share"
             @click.stop="shareAction"
           >
             <svg
@@ -130,7 +132,9 @@
           <div v-if="!isFuture || isDev" class="absolute top-2 right-2 flex items-center gap-1.5">
             <button
               :id="`tour-card-share-${formatDateKey(action.date)}`"
-              class="rounded-full w-7 h-7 flex items-center justify-center bg-state-incomplete hover:brightness-110 text-white transition-colors" aria-label="Share"
+              class="rounded-full w-7 h-7 flex items-center justify-center hover:brightness-110 text-white transition-colors"
+              :class="isShared(action.date) ? 'bg-state-complete' : 'bg-state-incomplete'"
+              aria-label="Share"
               @click.stop="shareAction"
             >
               <svg
@@ -182,22 +186,8 @@
             v-html="renderMarkdown(action.details)"
           />
 
-          <!-- Bottom: share notice + CTA -->
+          <!-- Bottom: CTA -->
           <div class="flex-shrink-0 flex flex-col gap-1.5 mt-auto pt-1">
-            <!-- Share notice -->
-            <Transition
-              enter-active-class="transition-all duration-300 ease-out"
-              leave-active-class="transition-all duration-300 ease-in" enter-from-class="opacity-0 translate-y-1"
-              leave-to-class="opacity-0 translate-y-1"
-            >
-              <div
-                v-if="shareNotice"
-                class="text-[10px] text-isf-blue-dark bg-isf-blue-dark/10 rounded px-2 py-1 text-center leading-tight"
-              >
-                {{ shareNotice }}
-              </div>
-            </Transition>
-
             <!-- CTA link — only in grid view (not calendar, where the modal carries it) -->
             <a
               v-if="!allowModal && (!isFuture || isDev) && action.link_url && action.link_url !== '#'"
@@ -219,6 +209,22 @@
         </div>
       </div>
     </div>
+
+    <!-- Share notice overlay -->
+    <Transition
+      enter-active-class="transition-all duration-300 ease-out"
+      leave-active-class="transition-all duration-300 ease-in"
+      enter-from-class="opacity-0 scale-95"
+      leave-to-class="opacity-0 scale-95"
+    >
+      <div
+        v-if="shareNotice"
+        class="absolute inset-x-0 top-1/2 -translate-y-1/2 mx-2 bg-[#f9c430]/80 rounded-lg px-4 py-3 flex items-center justify-center cursor-pointer z-20"
+        @click.stop="shareNotice = null"
+      >
+        <span class="text-isf-blue-dark font-semibold text-sm text-center leading-snug">{{ shareNotice }}</span>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -228,6 +234,7 @@ import { computed, inject, nextTick, onUnmounted, ref } from 'vue'
 import defaultImage from '~/assets/christy-dalmat-y_z3rURYpR0-unsplash.webp'
 import { formatDateKey } from '~/composables/dateHelpers'
 import { useActionCompletion } from '~/composables/useActionCompletion'
+import { useActionSharing } from '~/composables/useActionSharing'
 import { renderInlineMarkdown, renderMarkdown } from '~/composables/useMarkdown'
 
 interface Props {
@@ -247,6 +254,7 @@ const _initToday = new Date()
 _initToday.setHours(0, 0, 0, 0)
 const isFlipped = ref(props.action.date <= _initToday)
 const { isComplete, toggleComplete, completedKeys } = useActionCompletion()
+const { isShared, markShared, toggleShared } = useActionSharing()
 const { trackShareDetail, trackCompleteAction, trackUncompleteAction } = useAnalytics()
 const { startShareTour } = useShareTour()
 
@@ -306,6 +314,12 @@ function handleToggleComplete(date: Date) {
 }
 
 async function shareAction() {
+  // If already shared, toggle off and return
+  if (isShared(props.action.date)) {
+    toggleShared(props.action.date)
+    return
+  }
+
   trackShareDetail(formatDateKey(props.action.date))
   const shareTitle = `No Kings Countdown: ${props.action.headline}`
   const shareText = props.action.social_message || props.action.details || ''
@@ -314,6 +328,7 @@ async function shareAction() {
   if (typeof navigator !== 'undefined' && navigator.share) {
     try {
       await navigator.share({ title: shareTitle, text: shareText, url: shareUrl })
+      markShared(props.action.date)
     }
     catch {
       // User cancelled — ignore
@@ -327,18 +342,20 @@ async function shareAction() {
     catch {
       // Clipboard blocked — still show notice
     }
+    markShared(props.action.date)
     if (shareNoticeTimer)
       clearTimeout(shareNoticeTimer)
-    shareNotice.value = 'Copied to clipboard!'
+    shareNotice.value = 'Share message copied to clipboard'
     shareNoticeTimer = setTimeout(() => {
       shareNotice.value = null
-    }, 4000)
+    }, 5000)
   }
 }
 </script>
 
 <style scoped>
 .action-card {
+  position: relative;
   aspect-ratio: 1;
   width: 100%;
   perspective: 1000px;
