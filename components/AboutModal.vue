@@ -1,16 +1,11 @@
 <template>
   <Teleport to="body">
-    <div
-      class="fixed inset-0 z-50 flex items-center justify-center p-4"
-      @click.self="emit('close')"
-    >
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4" @click.self="emit('close')">
       <div class="absolute inset-0 bg-black/60" @click="emit('close')" />
 
       <div
         class="relative z-10 bg-white rounded-xl shadow-2xl w-full max-w-lg flex flex-col overflow-hidden max-h-[90vh]"
-        role="dialog"
-        aria-modal="true"
-        aria-label="About"
+        role="dialog" aria-modal="true" aria-label="About"
       >
         <!-- Header -->
         <div class="flex items-center justify-between px-5 py-4 border-b border-isf-tinted flex-shrink-0">
@@ -19,10 +14,12 @@
           </h2>
           <button
             class="text-isf-slate hover:text-isf-blue-dark bg-transparent rounded-full p-1.5 transition-colors"
-            aria-label="Close"
-            @click="emit('close')"
+            aria-label="Close" @click="emit('close')"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg
+              xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+            >
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -32,10 +29,19 @@
         <!-- Body -->
         <div class="px-5 py-5 space-y-4 overflow-y-auto">
           <p class="text-isf-blue-dark text-base leading-relaxed">
-            The <a href="https://nokings.org/" target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue">No Kings</a> march is a nationwide mobilization to defend democratic norms and oppose authoritarian overreach. This app helps people show up for the cause every day in the weeks leading up to the march — not just on the day itself.
+            The <a
+              href="https://nokings.org/" target="_blank" rel="noopener noreferrer"
+              class="underline hover:text-isf-blue"
+            >No Kings</a> march is a nationwide mobilization to defend democratic
+            norms and oppose authoritarian overreach. This app helps people show up for the cause every day in the weeks
+            leading up to the march — not just on the day itself.
           </p>
           <p class="text-isf-blue-dark text-base leading-relaxed">
-            Each day unlocks one short, meaningful action: calling a representative, sharing a message, supporting an organization, building community, learning and training, or finding local causes to support. <strong>Progress is tracked privately in your browser — nothing is sent to any server.</strong> (<button class="underline hover:text-isf-blue transition-colors" @click="emit('privacy')">
+            Each day unlocks one short, meaningful action: calling a representative, sharing a message, supporting an
+            organization, building community, learning and training, or finding local causes to support.
+            <strong>Progress is tracked privately in your browser — nothing is sent to any server.</strong> (<button
+              class="underline hover:text-isf-blue transition-colors" @click="emit('privacy')"
+            >
               See our Privacy Policy
             </button>)
           </p>
@@ -47,11 +53,13 @@
             <ul class="space-y-1.5">
               <li class="flex gap-2 text-base text-isf-blue-dark leading-relaxed">
                 <span class="mt-0.5 text-isf-blue flex-shrink-0">✓</span>
-                <span><strong>Tied to the resistance</strong> — focused on democratic norms, anti-authoritarianism, or civic engagement</span>
+                <span><strong>Tied to the resistance</strong> — focused on democratic norms, anti-authoritarianism, or
+                  civic engagement</span>
               </li>
               <li class="flex gap-2 text-base text-isf-blue-dark leading-relaxed">
                 <span class="mt-0.5 text-isf-blue flex-shrink-0">✓</span>
-                <span><strong>Broadly accessible</strong> — relevant to people across the US, requiring no special skills or prior activist experience</span>
+                <span><strong>Broadly accessible</strong> — relevant to people across the US, requiring no special
+                  skills or prior activist experience</span>
               </li>
               <li class="flex gap-2 text-base text-isf-blue-dark leading-relaxed">
                 <span class="mt-0.5 text-isf-blue flex-shrink-0">✓</span>
@@ -59,21 +67,29 @@
               </li>
               <li class="flex gap-2 text-base text-isf-blue-dark leading-relaxed">
                 <span class="mt-0.5 text-isf-blue flex-shrink-0">✓</span>
-                <span><strong>Completable in under 15 minutes</strong> — no lengthy commitments or sign-ups required</span>
+                <span><strong>Completable in under 15 minutes</strong> — no lengthy commitments or sign-ups
+                  required</span>
               </li>
               <li class="flex gap-2 text-base text-isf-blue-dark leading-relaxed">
                 <span class="mt-0.5 text-isf-blue flex-shrink-0">✓</span>
-                <span><strong>Varied in type</strong> — contacting representatives, sharing on social media, showing up locally, supporting organizations</span>
+                <span><strong>Varied in type</strong> — contacting representatives, sharing on social media, showing up
+                  locally, supporting organizations</span>
               </li>
             </ul>
           </div>
 
           <p class="text-isf-blue-dark text-base leading-relaxed">
-            Have an idea for an action? <a href="https://forms.gle/2Zic21S9eiaLqVPR7" target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue">Submit a suggestion →</a>
+            Have an idea for an action? <a
+              href="https://forms.gle/2Zic21S9eiaLqVPR7" target="_blank"
+              rel="noopener noreferrer" class="underline hover:text-isf-blue"
+            >Submit a suggestion →</a>
           </p>
 
           <p class="text-isf-blue-dark text-base leading-relaxed">
-            Images courtesy of our <button class="underline hover:text-isf-blue transition-colors" @click="navigateTo('/artists')">
+            Images courtesy of our <button
+              class="underline hover:text-isf-blue transition-colors"
+              @click="navigateTo('/artists')"
+            >
               contributing artists →
             </button>
           </p>
@@ -81,7 +97,10 @@
           <!-- ISF Logo -->
           <div class="flex justify-center pt-2">
             <a href="https://indivisiblesf.org/" target="_blank" rel="noopener noreferrer">
-              <img src="/isf-logo.webp" alt="Indivisible SF" class="h-12 w-auto opacity-80 hover:opacity-100 transition-opacity">
+              <img
+                src="/isf-logo.webp" alt="Indivisible SF"
+                class="h-12 w-auto opacity-80 hover:opacity-100 transition-opacity"
+              >
             </a>
           </div>
         </div>
@@ -91,24 +110,41 @@
           <!-- Build & data info -->
           <div class="text-[10px] leading-[0.8rem] text-isf-blue space-y-1">
             <div>
-              <span class="font-semibold">code:</span>
-              <a :href="`https://github.com/IndivisibleSFOrg/no-kings-countdown/releases/tag/${buildInfo.baseTag}`" target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue transition-colors">{{ buildInfo.baseTag }}</a>{{ buildInfo.offset }}+<a :href="`https://github.com/IndivisibleSFOrg/no-kings-countdown/commit/${buildInfo.shortSha}`" target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue transition-colors">{{ buildInfo.shortSha }}</a>
-              (<a :href="`https://github.com/IndivisibleSFOrg/no-kings-countdown/tree/${buildInfo.ref}`" target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue transition-colors">{{ buildInfo.ref }}</a>)
+              <span class="font-semibold">code: </span>
+              <a
+                :href="`https://github.com/IndivisibleSFOrg/no-kings-countdown/releases/tag/${buildInfo.baseTag}`"
+                target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue transition-colors"
+              >{{
+                buildInfo.baseTag }}</a>{{ buildInfo.offset }}+<a
+                :href="`https://github.com/IndivisibleSFOrg/no-kings-countdown/commit/${buildInfo.shortSha}`"
+                target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue transition-colors"
+              >{{
+                buildInfo.shortSha }}</a>
+              (<a
+                :href="`https://github.com/IndivisibleSFOrg/no-kings-countdown/tree/${buildInfo.ref}`" target="_blank"
+                rel="noopener noreferrer" class="underline hover:text-isf-blue transition-colors"
+              >{{ buildInfo.ref
+              }}</a>)
             </div>
             <div>
-              <span class="font-semibold">deployed:</span>
-              <a v-if="buildInfo.runUrl" :href="buildInfo.runUrl" target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue transition-colors">{{ buildInfo.date }}</a>
+              <span class="font-semibold">deployed: </span>
+              <a
+                v-if="buildInfo.runUrl" :href="buildInfo.runUrl" target="_blank" rel="noopener noreferrer"
+                class="underline hover:text-isf-blue transition-colors"
+              >{{ buildInfo.date }}</a>
               <span v-else>{{ buildInfo.date }}</span>
             </div>
             <div v-if="fetchedAt" class="flex items-center gap-1">
-              <span class="font-semibold">actions:</span>
+              <span class="font-semibold">actions: </span>
               <button
                 class="flex items-center gap-1 underline hover:text-isf-blue transition-colors cursor-pointer"
-                title="Click to refresh data"
-                @click="emit('refresh')"
+                title="Click to refresh data" @click="emit('refresh')"
               >
                 <span>refreshed at {{ dataFreshnessLabel }}</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                >
                   <polyline points="23 4 23 10 17 10" />
                   <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
                 </svg>

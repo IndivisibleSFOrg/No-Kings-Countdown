@@ -2,16 +2,11 @@
   <div class="w-full">
     <div class="grid-view">
       <div
-        v-for="action in sortedActions"
-        :id="`action-${formatDateKey(action.date)}`"
-        :key="action.date.toISOString()"
-        :class="{ 'today-card': isTodayDate(action.date) }"
-        style="border-radius: 0.75rem;"
+        v-for="action in sortedActions" :id="`action-${formatDateKey(action.date)}`" :key="action.date.toISOString()"
+        :class="{ 'today-card': isTodayDate(action.date) }" style="border-radius: 0.75rem;"
       >
         <ActionCard
-          :action="action"
-          :show-day-name="true"
-          date-label-size="1.875rem"
+          :action="action" :show-day-name="true" date-label-size="1.875rem"
           :highlight="highlightDate === formatDateKey(action.date)"
         />
       </div>
@@ -90,9 +85,17 @@ function isTodayDate(date: Date): boolean {
 }
 
 @keyframes today-ring {
-  0%   { box-shadow: 0 0 0 0   rgba(59, 130, 246, 0.7); }
-  40%  { box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.4); }
-  100% { box-shadow: 0 0 0 14px rgba(59, 130, 246, 0); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  }
+
+  40% {
+    box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.4);
+  }
+
+  100% {
+    box-shadow: 0 0 0 14px rgba(59, 130, 246, 0);
+  }
 }
 
 @media (min-width: 640px) {

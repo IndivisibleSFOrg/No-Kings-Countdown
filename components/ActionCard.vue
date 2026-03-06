@@ -1,7 +1,6 @@
 <template>
   <div
-    class="action-card rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-    :class="[
+    class="action-card rounded-lg shadow-lg hover:shadow-xl transition-all duration-300" :class="[
       { flipped: isFlipped },
       isToday ? 'ring-4 ring-state-today ring-offset-2' : (props.highlight ? 'ring-4 ring-state-highlight ring-offset-2' : ''),
     ]"
@@ -10,49 +9,45 @@
       <!-- Front -->
       <div
         class="action-card-face action-card-front rounded-lg overflow-hidden"
-        :class="{ 'cursor-pointer': isDev && isFuture }"
-        @click="isDev && isFuture ? isFlipped = true : undefined"
+        :class="{ 'cursor-pointer': isDev && isFuture }" @click="isDev && isFuture ? isFlipped = true : undefined"
       >
         <img
-          :src="action.image_front.image_url || defaultImage"
-          :alt="action.headline"
-          class="absolute inset-0 w-full h-full object-cover"
-          referrerpolicy="no-referrer"
+          :src="action.image_front.image_url || defaultImage" :alt="action.headline"
+          class="absolute inset-0 w-full h-full object-cover" referrerpolicy="no-referrer"
         >
         <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent" />
 
         <!-- Date + pills: upper left column -->
         <div class="absolute top-2 left-2 flex flex-col items-start gap-1">
-          <div class="text-white font-bold leading-none drop-shadow" :style="{ fontSize: props.dateLabelSize ?? '1.5rem' }">
+          <div
+            class="text-white font-bold leading-none drop-shadow"
+            :style="{ fontSize: props.dateLabelSize ?? '1.5rem' }"
+          >
             {{ dateLabel }}
           </div>
           <div v-if="isToday" class="bg-state-today text-white text-xs font-semibold px-2 py-0.5 rounded-full">
             Today
           </div>
-          <div v-if="isDev && action.labels.includes('testing')" class="bg-yellow-400 text-black text-xs font-semibold px-2 py-0.5 rounded-full">
+          <div
+            v-if="isDev && action.labels.includes('testing')"
+            class="bg-yellow-400 text-black text-xs font-semibold px-2 py-0.5 rounded-full"
+          >
             TEST
           </div>
         </div>
 
         <!-- Image attribution: lower left -->
         <a
-          v-if="action.image_front.artist_url && settings.showImageAttributions"
-          :href="action.image_front.artist_url"
-          target="_blank"
-          rel="noopener noreferrer"
+          v-if="action.image_front.artist_url && settings.showImageAttributions" :href="action.image_front.artist_url"
+          target="_blank" rel="noopener noreferrer"
           class="image-attribution absolute bottom-2 left-2 bg-isf-blue-dark/90 text-white px-1.5 py-0.5 rounded leading-none hover:bg-isf-blue-dark transition-colors"
           @click.stop
         >{{ action.image_front.artist_name || '©' }}</a>
 
         <!-- Lock overlay for future cards -->
-        <div
-          v-if="isFuture && !isDev"
-          class="absolute inset-0 flex items-center justify-center pointer-events-none"
-        >
+        <div v-if="isFuture && !isDev" class="absolute inset-0 flex items-center justify-center pointer-events-none">
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
             class="w-[40%] h-[40%] text-isf-blue"
             style="filter: drop-shadow(0 0 24px rgba(255,255,255,1)) drop-shadow(0 0 12px rgba(255,255,255,1)) drop-shadow(0 0 6px rgba(255,255,255,0.95))"
             aria-label="Locked"
@@ -69,11 +64,13 @@
         <div v-if="!isFuture" class="absolute top-2 right-2 flex items-center gap-1.5">
           <button
             :id="`tour-card-share-${formatDateKey(action.date)}`"
-            class="text-white/80 hover:text-white transition-colors p-0.5 drop-shadow"
-            aria-label="Share"
+            class="text-white/80 hover:text-white transition-colors p-0.5 drop-shadow" aria-label="Share"
             @click.stop="shareAction"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg
+              xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+            >
               <circle cx="18" cy="5" r="3" />
               <circle cx="6" cy="12" r="3" />
               <circle cx="18" cy="19" r="3" />
@@ -87,7 +84,10 @@
             :title="isComplete(action.date) ? 'Completed – click for details' : 'Not completed – click for details'"
             @click.stop="openDetail(props.action)"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <svg
+              xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+            >
               <polyline points="20 6 9 17 4 12" />
             </svg>
           </button>
@@ -103,21 +103,25 @@
         <!-- Upper 50%: image -->
         <div class="relative h-1/2 flex-shrink-0">
           <img
-            :src="action.image_back.image_url || defaultImage"
-            :alt="action.headline"
-            class="absolute inset-0 w-full h-full object-cover"
-            referrerpolicy="no-referrer"
+            :src="action.image_back.image_url || defaultImage" :alt="action.headline"
+            class="absolute inset-0 w-full h-full object-cover" referrerpolicy="no-referrer"
           >
           <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent" />
           <!-- Date + pills: upper left column -->
           <div class="absolute top-2 left-2 flex flex-col items-start gap-1">
-            <div class="text-white font-bold leading-none drop-shadow" :style="{ fontSize: props.dateLabelSize ?? '1.5rem' }">
+            <div
+              class="text-white font-bold leading-none drop-shadow"
+              :style="{ fontSize: props.dateLabelSize ?? '1.5rem' }"
+            >
               {{ dateLabel }}
             </div>
             <div v-if="isToday" class="bg-state-today text-white text-xs font-semibold px-2 py-0.5 rounded-full">
               Today
             </div>
-            <div v-if="isDev && action.labels.includes('testing')" class="bg-yellow-400 text-black text-xs font-semibold px-2 py-0.5 rounded-full">
+            <div
+              v-if="isDev && action.labels.includes('testing')"
+              class="bg-yellow-400 text-black text-xs font-semibold px-2 py-0.5 rounded-full"
+            >
               TEST
             </div>
           </div>
@@ -126,11 +130,13 @@
           <div v-if="!isFuture || isDev" class="absolute top-2 right-2 flex items-center gap-1.5">
             <button
               :id="`tour-card-share-${formatDateKey(action.date)}`"
-              class="text-white/80 hover:text-white transition-colors p-0.5 drop-shadow"
-              aria-label="Share"
+              class="text-white/80 hover:text-white transition-colors p-0.5 drop-shadow" aria-label="Share"
               @click.stop="shareAction"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+              >
                 <circle cx="18" cy="5" r="3" />
                 <circle cx="6" cy="12" r="3" />
                 <circle cx="18" cy="19" r="3" />
@@ -144,7 +150,10 @@
               :title="isComplete(action.date) ? 'Mark incomplete' : 'Mark complete'"
               @click.stop="handleToggleComplete(action.date)"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+              >
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </button>
@@ -152,10 +161,8 @@
 
           <!-- Image attribution: lower left -->
           <a
-            v-if="action.image_back.artist_url && settings.showImageAttributions"
-            :href="action.image_back.artist_url"
-            target="_blank"
-            rel="noopener noreferrer"
+            v-if="action.image_back.artist_url && settings.showImageAttributions" :href="action.image_back.artist_url"
+            target="_blank" rel="noopener noreferrer"
             class="image-attribution absolute bottom-2 left-2 bg-isf-blue-dark/90 text-white px-1.5 py-0.5 rounded leading-none hover:bg-isf-blue-dark transition-colors"
             @click.stop
           >{{ action.image_back.artist_name || '©' }}</a>
@@ -180,8 +187,7 @@
             <!-- Share notice -->
             <Transition
               enter-active-class="transition-all duration-300 ease-out"
-              leave-active-class="transition-all duration-300 ease-in"
-              enter-from-class="opacity-0 translate-y-1"
+              leave-active-class="transition-all duration-300 ease-in" enter-from-class="opacity-0 translate-y-1"
               leave-to-class="opacity-0 translate-y-1"
             >
               <div
@@ -195,14 +201,15 @@
             <!-- CTA link — only in grid view (not calendar, where the modal carries it) -->
             <a
               v-if="!allowModal && (!isFuture || isDev) && action.link_url && action.link_url !== '#'"
-              :href="action.link_url"
-              target="_blank"
-              rel="noopener noreferrer"
+              :href="action.link_url" target="_blank" rel="noopener noreferrer"
               class="inline-flex items-center justify-center gap-1.5 bg-btn-primary hover:bg-btn-primary-dark text-white font-semibold text-xs px-3 py-2 rounded-lg transition-colors flex-shrink-0"
               @click.stop
             >
               {{ action.link_text || 'Learn more' }}
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+              >
                 <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
                 <polyline points="15 3 21 3 21 9" />
                 <line x1="10" y1="14" x2="21" y2="3" />
@@ -233,7 +240,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const openDetail = inject<(action: ActionItem) => void>('openDetail', () => {})
+const openDetail = inject<(action: ActionItem) => void>('openDetail', () => { })
 
 // Start flipped for past/today cards so users see the content immediately.
 const _initToday = new Date()
