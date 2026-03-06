@@ -78,7 +78,7 @@
             <button
               id="tour-action-complete"
               class="flex-shrink-0 rounded-full w-8 h-8 flex items-center justify-center shadow transition-colors mt-0.5"
-              :class="isComplete(action.date) ? 'bg-state-complete hover:bg-state-complete-dark' : 'bg-state-incomplete/80 hover:brightness-110'"
+              :class="isComplete(action.date) ? 'bg-state-complete hover:bg-state-complete-dark' : 'bg-state-incomplete hover:brightness-110'"
               :title="isComplete(action.date) ? 'Mark incomplete' : 'Mark complete'"
               @click="handleToggleComplete(action.date)"
             >
