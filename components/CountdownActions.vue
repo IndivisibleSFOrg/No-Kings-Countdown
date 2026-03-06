@@ -6,11 +6,11 @@
         <div class="flex flex-col items-center md:flex-row md:items-center md:justify-between gap-4">
           <!-- Hero text -->
           <div id="tour-title" class="flex-1">
-            <h1 class="font-sans text-2xl font-black text-isf-blue leading-tight text-center md:text-left mb-1">
+            <h1 class="font-sans text-4xl font-black text-isf-blue leading-tight text-center md:text-left mb-1">
               No Kings 3 Countdown
             </h1>
             <p class="text-base text-isf-blue text-center md:text-left">
-              Small daily actions with big impacts to build momentum for the <a href="https://nokings.org/" target="_blank" rel="noopener noreferrer" class="font-bold underline hover:text-isf-blue transition-colors">No Kings 3</a> march on March 28. Track and share your progress.
+              Small daily actions with big impacts leading up to the <a href="https://nokings.org/" target="_blank" rel="noopener noreferrer" class="font-bold underline hover:text-isf-blue transition-colors">No Kings 3</a> march on March 28. Track and share your progress to help build community and momentum. <span class="italic">We need you!</span>
               <NuxtLink to="/about" class="underline hover:text-isf-blue transition-colors font-bold">
                 Learn More
               </NuxtLink>
