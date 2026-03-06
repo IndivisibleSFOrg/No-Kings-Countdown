@@ -77,7 +77,7 @@ export function useHomeTour() {
         popover: {
           title: 'More Links',
           description:
-            'Find out more about this project on the About page, read our Privacy Statement, suggest a new action, or report an issue on GitHub.',
+            'Find out more about this project on the About page, read our Privacy Policy, suggest a new action, or report an issue on GitHub.',
           side: 'top',
           align: 'center',
         },

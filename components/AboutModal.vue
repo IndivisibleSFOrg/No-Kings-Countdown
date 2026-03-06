@@ -32,11 +32,11 @@
         <!-- Body -->
         <div class="px-5 py-5 space-y-4 overflow-y-auto">
           <p class="text-isf-navy text-base leading-relaxed">
-            The <a href="https://nokings.org/" target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue">No Kings March</a> is a nationwide mobilization to defend democratic norms and oppose authoritarian overreach. This app helps people show up for the cause every day in the weeks leading up to the march — not just on the day itself.
+            The <a href="https://nokings.org/" target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue">No Kings</a> march is a nationwide mobilization to defend democratic norms and oppose authoritarian overreach. This app helps people show up for the cause every day in the weeks leading up to the march — not just on the day itself.
           </p>
           <p class="text-isf-navy text-base leading-relaxed">
-            Each day unlocks one action completable in under 15 minutes: calling a representative, sharing a message, supporting an organization, or showing up locally. <strong>Progress is tracked privately in your browser — nothing is sent to any server.</strong> (<button class="underline hover:text-isf-blue transition-colors" @click="emit('privacy')">
-              See our Privacy Statement
+            Each day unlocks one short, meaningful action: calling a representative, sharing a message, supporting an organization, building community, learning and training, or finding local causes to support. <strong>Progress is tracked privately in your browser — nothing is sent to any server.</strong> (<button class="underline hover:text-isf-blue transition-colors" @click="emit('privacy')">
+              See our Privacy Policy
             </button>)
           </p>
 

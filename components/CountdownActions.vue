@@ -4,26 +4,16 @@
     <header class="bg-white border-b-4 border-isf-blue shadow-md">
       <div class="max-w-7xl mx-auto px-4 py-6">
         <div class="flex flex-col items-center md:flex-row md:items-center md:justify-between gap-4">
-          <!-- Site graphic -->
-          <div class="flex-shrink-0">
-            <img src="/og-image.webp" alt="No Kings Countdown" class="max-h-[100px] w-auto">
-          </div>
-
           <!-- Hero text -->
           <div id="tour-title" class="flex-1">
             <h1 class="font-sans text-2xl font-black text-isf-blue leading-tight text-center md:text-left mb-1">
-              No Kings Countdown
+              No Kings 3 Countdown
             </h1>
             <p class="text-base text-isf-blue text-center md:text-left">
-              We're building toward the nationwide <a
-                href="https://nokings.org/" target="_blank"
-                rel="noopener noreferrer" class="underline hover:text-isf-blue transition-colors"
-              >No Kings March</a> on
-              March 28, 2026 — one action at a time.
-              Each day unlocks something you can complete in under 15 minutes. Track your progress, share with
-              friends, and help fuel the movement to defend democracy. All progress is stored locally in your browser — no personal data is collected or shared. <button class="underline hover:text-isf-blue transition-colors font-bold" @click="navigateTo('/privacy')">
-                Learn more.
-              </button>
+              Small daily actions with big impacts to build momentum for the <a href="https://nokings.org/" target="_blank" rel="noopener noreferrer" class="font-bold underline hover:text-isf-blue transition-colors">No Kings 3</a> march on March 28. Track and share your progress.
+              <NuxtLink to="/about" class="underline hover:text-isf-blue transition-colors font-bold">
+                Learn More
+              </NuxtLink>
             </p>
           </div>
 
@@ -47,7 +37,7 @@
             About
           </NuxtLink>
           <NuxtLink to="/privacy" class="text-white/80 hover:text-white underline-offset-2 hover:underline transition-colors">
-            Privacy Statement
+            Privacy Policy
           </NuxtLink>
           <a
             href="https://github.com/IndivisibleSFOrg/no-kings-countdown" target="_blank" rel="noopener noreferrer"

@@ -15,7 +15,7 @@
         <!-- Header -->
         <div class="flex items-center justify-between px-5 py-4 border-b border-isf-tinted">
           <h2 class="font-bold text-isf-navy text-lg">
-            Privacy Statement
+            Privacy Policy
           </h2>
           <button
             class="text-isf-slate hover:text-isf-navy bg-transparent rounded-full p-1.5 transition-colors"
