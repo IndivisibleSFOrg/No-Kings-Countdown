@@ -45,6 +45,25 @@ export default defineNuxtConfig({
     '@nuxtjs/plausible',
   ],
 
+  // nuxt-gtag and @nuxtjs/plausible both register a useTrackEvent auto-import.
+  // We never call useTrackEvent directly, so drop gtag's mock to silence the
+  // duplicate-import warning.
+  hooks: {
+    'imports:sources': (presets) => {
+      for (const preset of presets) {
+        if (typeof preset.from === 'string' && preset.from.includes('nuxt-gtag')) {
+          preset.imports = preset.imports.filter((i) => {
+            if (typeof i === 'string')
+              return i !== 'useTrackEvent'
+            if (Array.isArray(i))
+              return i[0] !== 'useTrackEvent'
+            return !('name' in i) || i.name !== 'useTrackEvent'
+          })
+        }
+      }
+    },
+  },
+
   gtag: {
     id: process.env.NUXT_PUBLIC_GTAG_ID || '',
     enabled: process.env.NODE_ENV === 'production' && !!process.env.NUXT_PUBLIC_GTAG_ID,
