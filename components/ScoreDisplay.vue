@@ -6,7 +6,8 @@
         <span
           class="font-sans text-2xl font-bold leading-none"
           :class="completedCount === totalAvailable && totalAvailable > 0 ? 'text-isf-green' : 'text-isf-gold-dark'"
-        >{{ completedCount }}/{{ totalAvailable }}</span>
+        >{{
+          completedCount }}/{{ totalAvailable }}</span>
         <p class="text-xs text-isf-slate mt-0.5">
           completed so far
         </p>
@@ -26,8 +27,7 @@
       <!-- Day-of-week header -->
       <div class="grid gap-0.5 mb-0.5" style="grid-template-columns: repeat(7, 1fr)">
         <div
-          v-for="label in DOW_LABELS"
-          :key="label"
+          v-for="label in DOW_LABELS" :key="label"
           class="w-3 h-3 flex items-center justify-center text-[7px] font-mono text-isf-slate/50 select-none"
         >
           {{ label }}
@@ -35,20 +35,13 @@
       </div>
       <!-- Dots: offset padding + action dots -->
       <div class="grid gap-0.5" style="grid-template-columns: repeat(7, 1fr)">
+        <div v-for="n in startOffset" :key="`pad-${n}`" class="w-3 h-3" />
         <div
-          v-for="n in startOffset"
-          :key="`pad-${n}`"
-          class="w-3 h-3"
-        />
-        <div
-          v-for="dot in calendarDots"
-          :key="dot.key"
-          class="w-3 h-3 rounded-sm transition-colors duration-300 relative flex items-center justify-center"
-          :class="[
+          v-for="dot in calendarDots" :key="dot.key"
+          class="w-3 h-3 rounded-sm transition-colors duration-300 relative flex items-center justify-center" :class="[
             dot.empty ? '' : dot.cls,
             dot.action && (dot.isAvailable || isDevMode) ? 'cursor-pointer hover:brightness-110' : 'cursor-default',
-          ]"
-          :title="dot.label"
+          ]" :title="dot.label"
           @click="dot.action && (dot.isAvailable || isDevMode) ? openDetail(dot.action) : undefined"
         >
           <span v-if="dot.isShared" class="w-1 h-1 rounded-full bg-white/80 pointer-events-none" />
@@ -59,8 +52,7 @@
     <!-- ── Clipboard share notice bubble ─────────────────────────────── -->
     <Transition
       enter-active-class="transition-all duration-300 ease-out"
-      leave-active-class="transition-all duration-300 ease-in"
-      enter-from-class="opacity-0 translate-y-2"
+      leave-active-class="transition-all duration-300 ease-in" enter-from-class="opacity-0 translate-y-2"
       leave-to-class="opacity-0 translate-y-2"
     >
       <div
@@ -89,7 +81,7 @@ const props = defineProps<Props>()
 const { completedKeys } = useActionCompletion()
 const { sharedKeys } = useActionSharing()
 const { isDevMode } = useDevMode()
-const openDetail = inject<(action: ActionItem) => void>('openDetail', () => {})
+const openDetail = inject<(action: ActionItem) => void>('openDetail', () => { })
 
 const DOW_LABELS = ['M', 'T', 'W', 'R', 'F', 'S', 'X']
 
