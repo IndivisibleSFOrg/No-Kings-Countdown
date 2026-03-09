@@ -53,6 +53,11 @@
 - When interacting with command line tools, consider whether command line arguments are likely to be mangled by the shell; use here docs when available and particularly for message bodies.
 - Some commands invoke pagers automatically (e.g., gh); consider invoking without paging or piping to cat
 
+### Agent Planning Gate (mandatory)
+**Agents must treat steps 1–4 of Issue-Driven Development as a hard stop.** Complete all four steps — scan open issues, read the issue, surface ambiguities, present a plan — then stop and wait. Do not create a branch, write any code, or take any repository action until the user replies with explicit approval.
+
+The user's initial request to "work on" or "implement" an issue is **not** approval. Approval is a separate, subsequent message after the plan is presented. When in doubt, stop and ask rather than proceed.
+
 ## Code Style
 
 Config: `eslint.config.ts` using [`@antfu/eslint-config`](https://github.com/antfu/eslint-config).
