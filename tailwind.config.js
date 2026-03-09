@@ -5,6 +5,7 @@ export default {
     './layouts/**/*.vue',
     './pages/**/*.vue',
     './plugins/**/*.{js,ts}',
+    './config/**/*.ts',
     './app.vue',
     './docs/*.html',
   ],
@@ -61,6 +62,10 @@ export default {
     'text-2xl',
     'text-3xl',
     'text-4xl',
+    // Action label pill background classes from config/actionLabels.ts.
+    // Tailwind's extractor does not reliably pick up class names from TS object
+    // values, so each bgClass used in ACTION_LABEL_CONFIG must also appear here.
+    'bg-isf-gold',
   ],
   plugins: [],
 }

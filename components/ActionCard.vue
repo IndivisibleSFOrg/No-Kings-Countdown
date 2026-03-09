@@ -29,10 +29,12 @@
             Today
           </div>
           <div
-            v-if="isDev && action.labels.includes('testing')"
-            class="bg-yellow-400 text-black text-xs font-semibold px-2 py-0.5 rounded-full"
+            v-for="pill in labelPills"
+            :key="pill.key"
+            :class="pill.bgClass"
+            class="text-isf-blue-dark text-xs font-semibold px-2 py-0.5 rounded-full"
           >
-            TEST
+            {{ pill.displayName }}
           </div>
         </div>
 
@@ -124,10 +126,12 @@
               Today
             </div>
             <div
-              v-if="isDev && action.labels.includes('testing')"
-              class="bg-yellow-400 text-black text-xs font-semibold px-2 py-0.5 rounded-full"
+              v-for="pill in labelPills"
+              :key="pill.key"
+              :class="pill.bgClass"
+              class="text-isf-blue-dark text-xs font-semibold px-2 py-0.5 rounded-full"
             >
-              TEST
+              {{ pill.displayName }}
             </div>
           </div>
 
@@ -261,6 +265,7 @@ import { useActionCompletion } from '~/composables/useActionCompletion'
 import { useActionSharing } from '~/composables/useActionSharing'
 import { useHoldToUnset } from '~/composables/useHoldToUnset'
 import { renderInlineMarkdown, renderMarkdown } from '~/composables/useMarkdown'
+import { getLabelPill } from '~/config/actionLabels'
 
 interface Props {
   action: ActionItem
@@ -320,6 +325,12 @@ const isFuture = computed(() => {
   today.setHours(0, 0, 0, 0)
   return props.action.date > today
 })
+
+const labelPills = computed(() =>
+  props.action.labels
+    .map(label => getLabelPill(label))
+    .filter(pill => pill !== null),
+)
 
 const { isDevMode: isDev } = useDevMode()
 const { settings } = useSettings()
