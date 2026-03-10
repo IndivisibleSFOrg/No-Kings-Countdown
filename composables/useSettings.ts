@@ -10,6 +10,9 @@ export interface AppSettings {
   showImageAttributions: boolean
   // Internal only — not user-visible. null means "no explicit override; auto-detect".
   devModeOverride: boolean | null
+  // The last major.minor version string (e.g. "1.2") for which the user
+  // closed the ReleaseModal. null means never seen.
+  lastSeenReleaseVersion: string | null
 }
 
 const DEFAULTS: AppSettings = {
@@ -18,6 +21,7 @@ const DEFAULTS: AppSettings = {
   tourSeenShare: false,
   showImageAttributions: false,
   devModeOverride: null,
+  lastSeenReleaseVersion: null,
 }
 
 // Module-level ref so state is shared across all component instances.
