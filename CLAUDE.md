@@ -13,6 +13,7 @@ Read these files before doing anything:
 | Design tokens (Tailwind names → CSS vars) | `tailwind.config.js` |
 | Design token hex values | `assets/css/main.css` `:root` block |
 | Design system rationale and component patterns | `docs/decision-records/DR-0001-design-system.md` |
+| Release notes selection, format, and AI prompt | `docs/decision-records/DR-0002-release-notes-policy.md` |
 | Design component reference | `docs/design-library.html` |
 | ESLint rules | `eslint.config.ts` |
 | Build data parsing | `utils/parseBuildData.ts`, `composables/googleSheets.ts` |

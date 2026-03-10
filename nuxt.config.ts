@@ -28,6 +28,44 @@ const gitShortSha = (() => {
   }
 })()
 
+/**
+ * Build an index of release versions from git tags.
+ * Tags must follow semver X.Y.Z. For each unique major.minor, we record the
+ * date of the first tag in that group (earliest patch release = release date).
+ * Sorted by version using git's version:refname sort (correct numeric order).
+ */
+const releaseVersionIndex: { version: string, date: string }[] = (() => {
+  try {
+    const output = execSync(
+      'git for-each-ref --sort=version:refname --format="%(refname:short) %(creatordate:short)" refs/tags',
+    ).toString().trim()
+    const byMinor = new Map<string, string>() // "major.minor" -> earliest ISO date
+    for (const line of output.split('\n')) {
+      const spaceIdx = line.indexOf(' ')
+      if (spaceIdx === -1)
+        continue
+      const tag = line.slice(0, spaceIdx)
+      const date = line.slice(spaceIdx + 1)
+      const m = tag.match(/^(\d+)\.(\d+)\.\d+$/)
+      if (!m || !date)
+        continue
+      const key = `${m[1]}.${m[2]}`
+      if (!byMinor.has(key))
+        byMinor.set(key, date)
+    }
+    return Array.from(byMinor.entries()).map(([version, date]) => ({ version, date }))
+  }
+  catch {
+    return []
+  }
+})()
+
+/** Current app major.minor derived from gitDescribe (e.g. "1.2.2" → "1.2"). */
+const appMajorMinor = (() => {
+  const m = gitDescribe.replace(/\+$/, '').match(/^(\d+)\.(\d+)/)
+  return m ? `${m[1]}.${m[2]}` : '0.0'
+})()
+
 const sheetUrl = (() => {
   const url = process.env.NUXT_PUBLIC_SHEET_URL
   if (!url)
@@ -124,6 +162,9 @@ export default defineNuxtConfig({
       // GA is activated via nuxt-gtag's own runtimeConfig (public.gtag.id).
       plausibleDomain: process.env.NUXT_PUBLIC_PLAUSIBLE_DOMAIN || '',
       posthogKey: process.env.NUXT_PUBLIC_POSTHOG_KEY || '',
+      // Release announcement data built from git tags at generation time.
+      releaseVersionIndex,
+      appMajorMinor,
     },
   },
 })
