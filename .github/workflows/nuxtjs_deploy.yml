@@ -5,9 +5,13 @@ on:
   # Runs on version tags (e.g. 1.2.3) — no leading prefix and no trailing suffix
   push:
     tags:
-      - "[0-9]+.[0-9]+.[0-9]+"
+      # Github's pattern matching support is crap, so we have to list out all the common version tag formats
+      - "[0-9].[0-9].[0-9]"
+      - "[0-9].[0-9].[0-9][0-9]"
+      - "[0-9].[0-9][0-9].[0-9]"
+      - "[0-9].[0-9][0-9].[0-9][0-9]"
 
-  # Allows you to run this workflow manually from the Actions tab
+      # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
