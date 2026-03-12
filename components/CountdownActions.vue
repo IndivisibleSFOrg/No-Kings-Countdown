@@ -17,8 +17,16 @@
             </p>
           </div>
 
-          <!-- Score + Share -->
-          <ScoreDisplay id="tour-score" :actions="props.actions" />
+          <!-- Menu tray trigger -->
+          <button
+            id="tour-score"
+            class="flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-isf-blue text-isf-blue hover:bg-isf-blue hover:text-white transition-colors font-semibold text-sm flex-shrink-0"
+            aria-label="Open menu"
+            @click="menuOpen = true"
+          >
+            <Menu :size="18" />
+            <span>Menu</span>
+          </button>
         </div>
       </div>
     </header>
@@ -29,53 +37,24 @@
       <CalendarView v-else :actions="actions" />
     </main>
 
-    <!-- Footer -->
-    <footer id="tour-footer" class="mt-16 bg-isf-blue text-white py-5">
-      <div class="max-w-7xl mx-auto px-4">
-        <nav class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
-          <NuxtLink to="/about" class="text-white/80 hover:text-white underline-offset-2 hover:underline transition-colors">
-            About
-          </NuxtLink>
-          <NuxtLink to="/privacy" class="text-white/80 hover:text-white underline-offset-2 hover:underline transition-colors">
-            Privacy Policy
-          </NuxtLink>
-          <a
-            href="https://github.com/IndivisibleSFOrg/no-kings-countdown" target="_blank" rel="noopener noreferrer"
-            class="text-white/80 hover:text-white underline-offset-2 hover:underline transition-colors"
-          >
-            GitHub Repo
-          </a>
-          <a
-            href="https://github.com/IndivisibleSFOrg/no-kings-countdown/issues" target="_blank"
-            rel="noopener noreferrer"
-            class="text-white/80 hover:text-white underline-offset-2 hover:underline transition-colors"
-          >
-            Report an Issue
-          </a>
-          <a
-            href="https://forms.gle/2Zic21S9eiaLqVPR7" target="_blank" rel="noopener noreferrer"
-            class="text-white/80 hover:text-white underline-offset-2 hover:underline transition-colors"
-          >
-            Suggest an Action
-          </a>
-        </nav>
-      </div>
-    </footer>
-
     <!-- Dev mode toggle (lower-left, local dev only) -->
     <DevModeToggle />
 
     <!-- Action detail overlay -->
     <ActionModal v-if="selectedAction" :action="selectedAction" @close="closeDetail" />
+
+    <!-- Sliding menu tray -->
+    <MenuTray :actions="props.actions" :open="menuOpen" @close="menuOpen = false" />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { ActionItem } from '~/composables/googleSheets'
+import { Menu } from 'lucide-vue-next'
 import { computed, nextTick, onMounted, onUnmounted, provide, ref, watch } from 'vue'
 import { formatDateKey } from '~/composables/dateHelpers'
 import ActionModal from './ActionModal.vue'
-import ScoreDisplay from './ScoreDisplay.vue'
+import MenuTray from './MenuTray.vue'
 
 interface Props {
   actions: ActionItem[]
@@ -84,6 +63,8 @@ interface Props {
 const props = defineProps<Props>()
 const router = useRouter()
 const route = useRoute()
+
+const menuOpen = ref(false)
 
 // --- Detail overlay ---
 const selectedAction = ref<ActionItem | null>(null)
