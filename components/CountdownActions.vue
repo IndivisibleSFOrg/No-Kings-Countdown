@@ -10,10 +10,7 @@
               No Kings 3 Countdown
             </h1>
             <p class="text-base text-isf-blue text-center md:text-left">
-              Small daily actions with big impacts leading up to the <a href="https://nokings.org/" target="_blank" rel="noopener noreferrer" class="font-bold underline hover:text-isf-blue transition-colors">No Kings 3</a> march on March 28. Track and share your progress to help build community and momentum. <span class="italic">We need you!</span>
-              <NuxtLink to="/about" class="underline hover:text-isf-blue transition-colors font-bold">
-                Learn More
-              </NuxtLink>
+              Create a daily habit of small actions with big impacts that build momentum toward <a href="https://nokings.org/" target="_blank" rel="noopener noreferrer" class="font-bold underline hover:text-isf-blue transition-colors">No Kings 3</a> on March 28. <br>Track and share your progress to help build the community that will repel authoritarianism in the United States.
             </p>
           </div>
 
