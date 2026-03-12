@@ -1,5 +1,6 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 import { execSync } from 'node:child_process'
+// https://nuxt.com/docs/api/configuration/nuxt-config
+import 'dotenv/config'
 
 const gitDescribe = (() => {
   try {
