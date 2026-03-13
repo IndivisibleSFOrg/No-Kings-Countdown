@@ -52,6 +52,23 @@
             </div>
           </div>
 
+          <!-- Reminders -->
+          <div class="px-5 py-5 border-b border-isf-tinted">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-isf-slate mb-3">
+              Reminders
+            </h3>
+            <button
+              class="flex items-center gap-2 text-sm text-isf-blue hover:text-isf-blue-dark transition-colors"
+              @click="handleAddToCalendar"
+            >
+              <CalendarPlus :size="16" />
+              Add to Calendar
+            </button>
+            <p class="mt-1.5 text-[11px] text-isf-slate leading-snug">
+              Downloads a .ics file with an 8am daily reminder for each remaining day.
+            </p>
+          </div>
+
           <!-- Navigation -->
           <nav class="px-5 py-5 border-b border-isf-tinted">
             <h3 class="text-xs font-bold uppercase tracking-widest text-isf-slate mb-3">
@@ -166,7 +183,7 @@
 
 <script setup lang="ts">
 import type { ActionItem } from '~/composables/googleSheets'
-import { RefreshCw, X } from 'lucide-vue-next'
+import { CalendarPlus, RefreshCw, X } from 'lucide-vue-next'
 import { computed } from 'vue'
 
 interface Props {
@@ -176,6 +193,13 @@ interface Props {
 
 defineProps<Props>()
 const emit = defineEmits<{ close: [] }>()
+
+const { downloadIcs } = useIcsDownload()
+
+function handleAddToCalendar() {
+  downloadIcs()
+  emit('close')
+}
 
 const { fetchedAt, loadData } = useGoogleSheetsData()
 
