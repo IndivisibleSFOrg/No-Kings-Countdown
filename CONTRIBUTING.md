@@ -14,7 +14,8 @@
 
 ### Branching
 - All work happens in a feature branch, never directly on `main`
-- Branch names follow the pattern `{issue-number}-{short-kebab-description}` (e.g., `57-analytics-provider-layer`)
+- Branch names follow the pattern `{prefix}/{issue-number}-{short-kebab-description}` (e.g., `feat/57-analytics-provider-layer`)
+- The prefix must be a [Conventional Commits](https://www.conventionalcommits.org/) type, matching the prefix used in commit messages for consistency. Common prefixes: `feat`, `fix`, `chore`, `docs`, `ci`
 - Branch is created from the latest `main` before starting work
 - After creating the branch, run `gh issue develop <number> --name <branch-name>` to link the branch to the issue in GitHub's Development sidebar
 - If `main` advances while the branch is in progress, rebase the branch onto the latest `main` before opening the PR for merge
