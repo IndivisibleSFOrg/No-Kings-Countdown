@@ -109,7 +109,8 @@ const sortedActions = computed(() =>
 // on adjacent months simply appear in their own week rows.
 const campaignActions = computed(() => sortedActions.value)
 
-// ── Calendar offset: always 0 — each row in the grid is a full Mon–Sun week
+// ── Calendar offset: placeholder for start-of-week user preference (see #93)
+// Returns 0 until a Sunday/Monday toggle is wired in via useSettings.
 const startOffset = computed(() => 0)
 
 // ── Per-day data: one full Mon–Sun week per row, only weeks with ≥1 action ─
