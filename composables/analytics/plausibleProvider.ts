@@ -51,5 +51,9 @@ export function createPlausibleProvider(): IAnalyticsProvider {
     trackCtaClick(dateKey, linkUrl) {
       track('cta_click', { date_key: dateKey, link_url: linkUrl })
     },
+
+    trackIcsDownload(dateKey) {
+      track('ics_download', { date_key: dateKey })
+    },
   }
 }

@@ -2,6 +2,8 @@
 // containing one VEVENT per remaining campaign day (today → March 28, 2026).
 // Each event fires an 8am local-time reminder with a day-specific URL.
 export function useIcsDownload() {
+  const { trackIcsDownload } = useAnalytics()
+
   function downloadIcs() {
     const CAMPAIGN_END = new Date(2026, 2, 28) // March 28, 2026
 
@@ -28,6 +30,7 @@ export function useIcsDownload() {
       const dateKey = `${y}-${m}-${d}`
       const dtStart = `${y}${m}${d}T080000`
       const dtEnd = `${y}${m}${d}T081500`
+      const eventUrl = `https://nokingscountdown.org/?date=${dateKey}&utm_source=ics&utm_medium=calendar&utm_campaign=daily_reminder`
 
       events.push(
         [
@@ -37,7 +40,7 @@ export function useIcsDownload() {
           'SUMMARY:No Kings Daily Action',
           `DTSTART;TZID=${tz}:${dtStart}`,
           `DTEND;TZID=${tz}:${dtEnd}`,
-          `DESCRIPTION:Today's action: https://nokingscountdown.org/?date=${dateKey}`,
+          `DESCRIPTION:Today's action: ${eventUrl}`,
           'BEGIN:VALARM',
           'ACTION:DISPLAY',
           'TRIGGER:PT0S',
@@ -59,6 +62,9 @@ export function useIcsDownload() {
       ...events,
       'END:VCALENDAR',
     ].join('\r\n')
+
+    const todayKey = `${todayY}-${String(todayM + 1).padStart(2, '0')}-${String(todayD).padStart(2, '0')}`
+    trackIcsDownload(todayKey)
 
     const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' })
     const url = URL.createObjectURL(blob)

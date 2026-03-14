@@ -61,6 +61,7 @@ export function useAnalytics() {
   const trackShareDetail = (dateKey: string) => call(p => p.trackShareDetail(dateKey))
   const trackShareProgress = () => call(p => p.trackShareProgress())
   const trackCtaClick = (dateKey: string, linkUrl: string) => call(p => p.trackCtaClick(dateKey, linkUrl))
+  const trackIcsDownload = (dateKey: string) => call(p => p.trackIcsDownload(dateKey))
 
   return {
     setBuildMetadata,
@@ -71,5 +72,6 @@ export function useAnalytics() {
     trackShareDetail,
     trackShareProgress,
     trackCtaClick,
+    trackIcsDownload,
   }
 }

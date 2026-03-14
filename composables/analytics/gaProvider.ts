@@ -48,5 +48,9 @@ export function createGaProvider(): IAnalyticsProvider {
     trackCtaClick(dateKey, linkUrl) {
       gtag('event', 'cta_click', { date_key: dateKey, link_url: linkUrl })
     },
+
+    trackIcsDownload(dateKey) {
+      gtag('event', 'ics_download', { date_key: dateKey })
+    },
   }
 }
