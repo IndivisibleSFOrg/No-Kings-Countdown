@@ -36,10 +36,7 @@
           <p class="text-isf-blue-dark text-base leading-relaxed">
             This site also uses <strong>Plausible Analytics</strong>, a privacy-focused service that sets no cookies
             and collects no personal data or cross-site identifiers. Plausible records only anonymous, aggregate event
-            counts (e.g. which actions were viewed or completed). Data is processed under <a
-              href="https://plausible.io/data-policy"
-              target="_blank" rel="noopener" class="underline hover:text-isf-blue"
-            >Plausible's data policy</a>.
+            counts (e.g. which actions were viewed or completed).
           </p>
           <p class="text-isf-blue-dark text-base leading-relaxed">
             <strong>We use these data solely to understand how many people visit and which content is most useful to
@@ -47,12 +44,13 @@
               visitor data with anyone.</strong>
           </p>
           <p class="text-isf-blue-dark text-base leading-relaxed">
-            To opt out: use <a
-              href="https://tools.google.com/dlpage/gaoptout"
+            For more detail, see <a
+              href="https://policies.google.com/privacy"
               target="_blank" rel="noopener" class="underline hover:text-isf-blue"
-            >Google's opt-out browser add-on</a> for Google Analytics; or run
-            <code class="text-sm bg-isf-tinted px-1 rounded">localStorage.setItem('plausible_ignore','true')</code>
-            in your browser console to opt out of Plausible.
+            >Google's Privacy Policy</a> and <a
+              href="https://plausible.io/data-policy"
+              target="_blank" rel="noopener" class="underline hover:text-isf-blue"
+            >Plausible's data policy</a>.
           </p>
           <p class="text-isf-blue-dark text-base leading-relaxed">
             Your action progress is saved locally on your device only and is transmitted only when you explicitly choose
