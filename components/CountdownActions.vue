@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Header -->
-    <header class="bg-white border-b-4 border-isf-blue shadow-md">
+    <header :class="isLocalDev ? 'bg-isf-gold-light' : 'bg-white'" class="border-b-4 border-isf-blue shadow-md">
       <div class="relative max-w-7xl mx-auto px-4 py-3 pr-14">
         <!-- Hamburger trigger — absolute upper-right -->
         <button
@@ -69,6 +69,7 @@ const props = defineProps<Props>()
 const router = useRouter()
 const route = useRoute()
 
+const isLocalDev = import.meta.dev
 const menuOpen = ref(false)
 
 // --- Detail overlay ---
