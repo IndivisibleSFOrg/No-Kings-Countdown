@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - no-kings-countdown
+    tags:
+      - '1.*.*'  # NKC release tags
 
 jobs:
   deploy:
