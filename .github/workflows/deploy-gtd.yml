@@ -9,6 +9,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      # Full history + all tags required so nuxt.config.ts can resolve
+      # git describe (appVersion) and git for-each-ref (releaseVersionIndex).
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
       - name: Build
         uses: ./.github/actions/build
         with:
