@@ -1,0 +1,40 @@
+name: "Deploy GTD main to preview.goodtroubledaily.org"
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Full history + all tags required so nuxt.config.ts can resolve
+      # git describe (appVersion) and git for-each-ref (releaseVersionIndex).
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Build
+        uses: ./.github/actions/build
+        with:
+          vercel_environment: preview
+          commit_ref: main
+          build_date: ${{ github.event.head_commit.timestamp }}
+          vercel_token: ${{ secrets.VERCEL_TOKEN }}
+          vercel_org_id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Deploy to preview.goodtroubledaily.org
+        run: |
+          url=$(npx vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} \
+            --meta githubCommitRef=main \
+            --meta githubCommitSha=${{ github.sha }} \
+            --meta githubOrg=${{ github.repository_owner }} \
+            --meta githubRepo=${{ github.event.repository.name }} \
+            --meta githubCommitAuthorLogin=${{ github.actor }})
+          npx vercel alias set "$url" preview.goodtroubledaily.org --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
