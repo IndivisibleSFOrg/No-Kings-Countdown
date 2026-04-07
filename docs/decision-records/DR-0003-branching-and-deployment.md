@@ -13,11 +13,12 @@ The project is a statically generated Nuxt site. As of the 2026-04-07 amendment,
 
 ### Deployment targets
 
-| Branch | Domain | Purpose |
+| Branch / trigger | Domain | Purpose |
 | --- | --- | --- |
-| `main` (production) | `goodtroubledaily.org` | Good Trouble Daily — production site; updated on `2.x.y` release tags |
-| `main` (integration) | `main.goodtroubledaily.org` | Reflects current state of `main`; used for review before tagging |
-| `no-kings-countdown` | `nokingscountdown.org` | No Kings Countdown — historical archive; tracks the branch head |
+| `main` (production via `2.*.*` tag) | `goodtroubledaily.org` | Good Trouble Daily — production site; updated on `2.x.y` release tags |
+| `main` (integration) | `preview.goodtroubledaily.org` | Reflects current state of `main`; used for review before tagging |
+| `no-kings-countdown` (branch) | `preview.nokingscountdown.org` | NKC integration preview; reflects current state of the branch |
+| `no-kings-countdown` (production via `1.*.*` tag) | `nokingscountdown.org` | No Kings Countdown — historical archive; updated on `1.x.y` release tags |
 | PR previews | ephemeral URL | Per-PR preview; URL posted as PR comment |
 
 ### Branching model
@@ -25,21 +26,21 @@ The project is a statically generated Nuxt site. As of the 2026-04-07 amendment,
 The repo has two long-lived branches:
 
 - **`main`** — active development branch for the Good Trouble Daily platform. Short-lived feature branches are cut from `main`, named `{type}/{issue-number}-{short-kebab-description}`, and merged back via merge commit.
-- **`no-kings-countdown`** — historical archive branch for the No Kings Countdown site. Accepts only bug fixes and minor content updates. Every push to this branch updates `nokingscountdown.org` directly; there is no separate tag-triggered deploy.
+- **`no-kings-countdown`** — historical archive branch for the No Kings Countdown site. Accepts only bug fixes and minor content updates. Every push to this branch deploys to `preview.nokingscountdown.org`; `1.*.*` tags on this branch trigger the production deploy to `nokingscountdown.org`.
 
 ### Tag versioning
 
 Tags serve two distinct purposes:
 
 1. **GTD release tags** (`2.x.y`, `3.x.y`, …) — mark a production release of Good Trouble Daily; drive the in-app `appVersion` via `git describe`, populate `releaseVersionIndex` via `git for-each-ref`, and trigger the Vercel production deploy to `goodtroubledaily.org`. Major version 2 onwards.
-2. **NKC tags** (`1.x.y`) — historical release markers on the `no-kings-countdown` branch. Used for version metadata only; do not trigger any deploy workflow.
+2. **NKC tags** (`1.x.y`) — release markers for the No Kings Countdown site. Drive version metadata and trigger a Vercel preview-tier deploy to `nokingscountdown.org` via `deploy-nkc-tagged.yml`.
 3. **Non-semver tags** — used for other product surfaces such as in-app feature tour anchors; these must never trigger a production deploy.
 
 The production tag pattern `2.*.*` (glob) matches only major-version-2-and-above tags, ensuring `1.x.y` NKC tags never trigger a GTD production deploy.
 
 ### Vercel project — single project, two roles
 
-Both sites share one Vercel project. Only `2.x.y`-tagged releases on `main` occupy the Vercel "production" slot, which maps to `goodtroubledaily.org` via the project's production domain assignment. `nokingscountdown.org` is routed via `vercel alias set` from the `no-kings-countdown` branch workflow, and requires only SSL provisioning in the project's domain list.
+Both sites share one Vercel project. Only `2.x.y`-tagged releases on `main` occupy the Vercel "production" slot, which maps to `goodtroubledaily.org` via the project's production domain assignment. `nokingscountdown.org` is routed via `vercel alias set` from the `deploy-nkc-tagged.yml` tag workflow, and requires only SSL provisioning in the project's domain list.
 
 The consequence: `nokingscountdown.org` always uses Vercel's Preview-tier environment variables. This is acceptable — the NKC site is a historical archive and its production configuration is static.
 
@@ -66,14 +67,15 @@ Disable Vercel's native GitHub integration entirely (`"github": { "enabled": fal
 
 | Workflow | Trigger | Target | Deployed to |
 | --- | --- | --- | --- |
-| `deploy-production.yml` | Push of tag matching `2.*.*` | Vercel production | `goodtroubledaily.org` |
-| `deploy-main.yml` | Push to `main` | Vercel preview, aliased | `main.goodtroubledaily.org` |
-| `deploy-nkc-branch.yml` | Push to `no-kings-countdown` | Vercel preview, aliased | `nokingscountdown.org` |
-| `deploy-preview.yml` | PR opened, synchronized, or reopened | Vercel preview | ephemeral URL (posted as PR comment) |
+| `deploy-gtd-tagged.yml` | Push of tag matching `2.*.*` | Vercel production | `goodtroubledaily.org` |
+| `deploy-gtd.yml` | Push to `main` | Vercel preview, aliased | `preview.goodtroubledaily.org` |
+| `deploy-nkc-tagged.yml` | Push of tag matching `1.*.*` | Vercel preview, aliased | `nokingscountdown.org` |
+| `deploy-nkc.yml` | Push to `no-kings-countdown` | Vercel preview, aliased | `preview.nokingscountdown.org` |
+| `deploy-pr.yml` | PR opened, synchronized, or reopened | Vercel preview | ephemeral URL (posted as PR comment) |
 
-The production workflow uses `vercel deploy --prebuilt --prod`; the others use `vercel deploy --prebuilt` (preview environment). The branch workflows additionally run `vercel alias set` to pin each deployment to its stable domain.
+The GTD production workflow uses `vercel deploy --prebuilt --prod`; all others use `vercel deploy --prebuilt` (preview environment). The branch and tag workflows additionally run `vercel alias set` to pin each deployment to its stable domain.
 
-Non-semver tags and `1.x.y` NKC tags do not trigger a production deploy.
+Non-semver tags do not trigger any deploy. `1.x.y` NKC tags trigger a Vercel preview-tier deploy (not a GTD production deploy).
 
 ### GitHub Pages
 

@@ -21,7 +21,7 @@ The No Kings March is a nationwide mobilization to defend democratic norms and o
 
 - Action data lives in a Google Sheet published as a CSV; the app fetches and caches it for 10 minutes
 - Completion state is stored in `localStorage` under `isf-completed-actions` (a JSON array of `YYYY-MM-DD` strings)
-- Statically generated and deployed to GitHub Pages — no backend, no database
+- Statically generated and deployed to Vercel — no backend, no database
 
 ### Setup
 
@@ -37,14 +37,24 @@ pnpm lint:css     # Stylelint check
 pnpm lint:css:fix # Stylelint auto-fix
 ```
 
+### Deployment
+
+All deployments run via GitHub Actions (Vercel's native GitHub integration is disabled). Each branch and tag pattern maps to a distinct Vercel deployment:
+
+| Trigger | Deployed to |
+| --- | --- |
+| Push of tag matching `2.*.*` | `goodtroubledaily.org` (Vercel production) |
+| Push to `main` | `preview.goodtroubledaily.org` |
+| Push of tag matching `1.*.*` | `nokingscountdown.org` |
+| Push to `no-kings-countdown` | `preview.nokingscountdown.org` |
+| PR opened / synchronized | ephemeral preview URL (posted as PR comment) |
+
 ### Contributing Code
 
 1. Fork the repo and create a feature branch
 2. Reference the relevant GitHub issue in your branch name or commit message
 3. Before opening for review, ensure `pnpm typecheck`, `pnpm generate`, and pre-commit hooks all pass
 4. Open a pull request against `main`
-
-Every commit to `main` is automatically deployed to GitHub Pages (typically ~90 seconds).
 
 ## Contributing Actions
 
