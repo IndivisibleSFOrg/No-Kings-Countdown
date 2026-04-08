@@ -97,7 +97,7 @@
               </li>
               <li>
                 <a
-                  href="https://github.com/reece/good-trouble-daily"
+                  :href="repoUrl"
                   target="_blank" rel="noopener noreferrer"
                   class="tray-link"
                 >
@@ -106,7 +106,7 @@
               </li>
               <li>
                 <a
-                  href="https://github.com/reece/good-trouble-daily/issues"
+                  :href="`${repoUrl}/issues`"
                   target="_blank" rel="noopener noreferrer"
                   class="tray-link"
                 >
@@ -141,7 +141,7 @@
                   class="underline hover:text-isf-blue-dark transition-colors"
                 >{{ buildInfo.ref }}</a>
                 (<a
-                  :href="`https://github.com/reece/good-trouble-daily/commit/${buildInfo.shortSha}`"
+                  :href="`${repoUrl}/commit/${buildInfo.shortSha}`"
                   target="_blank" rel="noopener noreferrer"
                   class="underline hover:text-isf-blue-dark transition-colors"
                 >{{ buildInfo.shortSha }}</a>{{ buildInfo.isDirty ? '+' : '' }})
@@ -209,6 +209,7 @@ function handleAddToCalendar() {
 const { fetchedAt, loadData } = useGoogleSheetsData()
 
 const config = useRuntimeConfig()
+const repoUrl = config.public.githubRepoUrl as string
 const buildInfo = computed(() => {
   const sha = config.public.commitSha as string
   const shortSha = config.public.commitShortSha as string
@@ -225,10 +226,10 @@ const buildInfo = computed(() => {
     shortSha: resolvedShortSha,
     isDirty,
     refUrl: isTag
-      ? `https://github.com/reece/good-trouble-daily/releases/tag/${ref}`
-      : `https://github.com/reece/good-trouble-daily/tree/${ref}`,
+      ? `${repoUrl}/releases/tag/${ref}`
+      : `${repoUrl}/tree/${ref}`,
     date: `${datePart} ${timePart.slice(0, 5)} UTC`,
-    runUrl: runId ? `https://github.com/reece/good-trouble-daily/actions/runs/${runId}` : null,
+    runUrl: runId ? `${repoUrl}/actions/runs/${runId}` : null,
   }
 })
 

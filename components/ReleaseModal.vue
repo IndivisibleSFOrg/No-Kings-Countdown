@@ -60,7 +60,7 @@
         <!-- Footer -->
         <div class="px-5 py-3 border-t border-isf-tinted flex-shrink-0 flex items-center justify-between">
           <a
-            href="https://github.com/reece/good-trouble-daily/releases"
+            :href="`${repoUrl}/releases`"
             target="_blank" rel="noopener noreferrer"
             class="text-sm text-isf-slate underline hover:text-isf-blue transition-colors"
           >View detailed release notes →</a>
@@ -93,6 +93,7 @@ const fetchError = ref(false)
 
 const config = useRuntimeConfig()
 const baseURL: string = (config.app as { baseURL?: string }).baseURL ?? '/'
+const repoUrl = config.public.githubRepoUrl as string
 
 /** Fetch and render the markdown for the selected version.
  * Old content is intentionally kept visible during the fetch to avoid

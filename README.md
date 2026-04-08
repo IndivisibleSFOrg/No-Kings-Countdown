@@ -15,7 +15,7 @@ One action, completable in under 15 minutes, every day: calling a representative
 ## For Developers
 
 **Stack:** Vue 3 · Nuxt 3 (static generation) · Tailwind CSS  
-**Issues:** [GitHub Issues](https://github.com/IndivisibleSFOrg/good-trouble-daily/issues)
+**Issues:** [GitHub Issues](https://github.com/reece/good-trouble-daily/issues)
 
 ### How It Works
 

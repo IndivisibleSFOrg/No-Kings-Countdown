@@ -183,6 +183,7 @@ export default defineNuxtConfig({
       releaseVersionIndex,
       appMajorMinor,
       appVersion,
+      githubRepoUrl: 'https://github.com/reece/good-trouble-daily',
     },
   },
 })
