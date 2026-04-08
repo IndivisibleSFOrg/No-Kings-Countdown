@@ -20,7 +20,7 @@ One action, completable in under 15 minutes, every day: calling a representative
 ### How It Works
 
 - Action data lives in a Google Sheet published as a CSV; the app fetches and caches it for 10 minutes
-- Completion state is stored in `localStorage` under `isf-completed-actions` (a JSON array of `YYYY-MM-DD` strings)
+- Completion state is stored in `localStorage` under `<campaign-slug>/completed-actions` (a JSON array of `YYYY-MM-DD` strings); sharing state under `<campaign-slug>/shared-actions`. Existing NKC users' data is migrated from the legacy `isf-completed-actions` / `isf-shared-actions` keys on first load.
 - Statically generated and deployed to Vercel — no backend, no database
 
 ### Setup
